@@ -1,59 +1,65 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import SendIcon from '@material-ui/icons/Send';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
+import EventIcon from '@material-ui/icons/Event';
+import MessageIcon from '@material-ui/icons/Message';
+import SettingsIcon from '@material-ui/icons/Settings';
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 
 
 class SideMenu extends React.Component {
 
-  state = {
-    open: false,
-  };
-
-  handleToggle = () => {
-    this.setState(state => {
-      return {
-        open: !state.open,
-      }
-    })
-  };
-
-  handleClose = (event) => {
-  };
-
   render() {
     return (
-      <div style={{width: "100%"}}>
-        <Button
-          aria-controls="menu-list-grow"
-          aria-haspopup="true"
-          onClick={this.handleToggle}
-        >
-          <p style={{color: "black"}}>Menu</p>
-        </Button>
-        <Popper open={this.state.open} keepMounted transition disablePortal>
-          {({TransitionProps, placement}) => (
-            <Grow
-              {...TransitionProps}
-              style={{transformOrigin: placement === 'left' ? 'center left' : 'center left'}}
-            >
-              <Paper id="menu-list-grow">
-                <ClickAwayListener onClickAway={this.handleClose}>
-                  <MenuList>
-                    <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </div>
+      <MenuList>
+        <MenuItem >
+          <ListItemIcon>
+            <SendIcon />
+          </ListItemIcon>
+          Looking for Gigpigs
+        </MenuItem>
+        <MenuItem >
+          <ListItemIcon>
+            <LibraryMusicIcon />
+          </ListItemIcon>
+          You're a Gigpig
+        </MenuItem>
+        <MenuItem >
+          <ListItemIcon>
+            <MessageIcon />
+          </ListItemIcon>
+          Messages
+        </MenuItem>
+        <MenuItem >
+          <ListItemIcon>
+            <EventIcon />
+          </ListItemIcon>
+          Events
+        </MenuItem>
+        <MenuItem >
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          My account
+        </MenuItem>
+        <MenuItem >
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem >
+          <ListItemIcon>
+            <KeyboardReturnIcon />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </MenuList>
     )
   }
 }
