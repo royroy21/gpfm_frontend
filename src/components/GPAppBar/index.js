@@ -9,6 +9,7 @@ import {fade} from "@material-ui/core/styles";
 import { withStyles } from '@material-ui/styles';
 
 import pig2 from "../../images/pig2.svg"
+import {Link} from "react-router-dom";
 
 const styles = theme => ({
     appBar: {
@@ -60,10 +61,12 @@ class GPAppBar extends React.Component {
     return (
       <AppBar className={classes.appBar} position="static">
         <Toolbar>
-          <img className={classes.image} src={pig2} alt="Logo" />
-          <Typography className={classes.title} variant="h6" noWrap>
-            Gigpig
-          </Typography>
+          <Link to="/">
+            <img className={classes.image} src={pig2} alt="Logo" />
+          </Link>
+            <Typography className={classes.title} variant="h6" noWrap>
+              <Link to="/" style={{textDecoration: "none", color: "white"}}>Gigpig</Link>
+            </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon/>
@@ -76,9 +79,11 @@ class GPAppBar extends React.Component {
               inputProps={{'aria-label': 'Search'}}
             />
           </div>
-          <Button className={classes.button}>
-            LOGIN
-          </Button>
+          <Link to="/login" style={{textDecoration: "none"}}>
+            <Button className={classes.button}>
+              LOGIN
+            </Button>
+           </Link>
         </Toolbar>
       </AppBar>
     )

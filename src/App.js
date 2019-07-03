@@ -5,9 +5,11 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import SideMenu from "./components/SideMenu";
 import GPAppBar from "./components/GPAppBar";
+import Login from "./components/User/Login";
 
 const theme = createMuiTheme({
   palette: {
@@ -29,12 +31,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function Home() {
+
+  return (
+    <p>home</p>
+  );
+}
+
+
 function App() {
 
   const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>
+      <Router>
       <div className={classes.root} style={{height: "900px"}}>
         <GPAppBar />
         <Grid container spacing={2}>
@@ -44,10 +55,14 @@ function App() {
             </Paper>
           </Grid>
           <Grid item xs={9}>
-            <Paper className={classes.paper}>Hello you beautiful people :)</Paper>
+            <Paper className={classes.paper}>
+              <Route path="/" exact component={Home} />
+              <Route path="/login" component={Login} />
+            </Paper>
           </Grid>
         </Grid>
       </div>
+      </Router>
     </ThemeProvider>
   );
 }
