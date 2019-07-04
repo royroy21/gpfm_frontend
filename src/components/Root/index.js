@@ -11,7 +11,6 @@ import SideMenu from "../SideMenu";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
     backgroundColor: '#5C5C5C',
   },
   paper: {
@@ -19,7 +18,6 @@ const styles = theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     padding: theme.spacing(2),
-    textAlign: 'left',
   },
 });
 
@@ -33,7 +31,7 @@ function Home() {
 
 class Root extends React.Component {
 
-  childComponentHeightDifference = 125;
+  paperHeightDifference = 125;
 
   state = {
     screenWidth: 0, screenHeight: 0
@@ -63,7 +61,7 @@ class Root extends React.Component {
   }
 
   getPaperHeight() {
-    const paperHeight = this.state.screenHeight - this.childComponentHeightDifference;
+    const paperHeight = this.state.screenHeight - this.paperHeightDifference;
     return `${paperHeight}px`;
   };
 
