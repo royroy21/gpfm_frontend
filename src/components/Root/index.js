@@ -8,7 +8,6 @@ import { Route } from "react-router-dom";
 import GPAppBar from "../GPAppBar";
 import Login from "../User/Login";
 import SideMenu from "../SideMenu";
-import Footer from "../Footer";
 
 const styles = theme => ({
   root: {
@@ -34,7 +33,7 @@ function Home() {
 
 class Root extends React.Component {
 
-  childComponentHeightDifference = 190;
+  childComponentHeightDifference = 125;
 
   state = {
     screenWidth: 0, screenHeight: 0
@@ -58,13 +57,14 @@ class Root extends React.Component {
 
   getScreenDimensions() {
     return {
-      height: this.state.screenHeight,
-      width: this.state.screenWidth,
+      height: `${this.state.screenHeight}px`,
+      width: `${this.state.screenWidth}px`,
     }
   }
 
-  getChildComponentHeight() {
-    return this.state.screenHeight - this.childComponentHeightDifference;
+  getPaperHeight() {
+    const paperHeight = this.state.screenHeight - this.childComponentHeightDifference;
+    return `${paperHeight}px`;
   };
 
   render() {
@@ -74,20 +74,17 @@ class Root extends React.Component {
         <GPAppBar />
         <Grid container spacing={2}>
           <Grid item xs={3}>
-            <Paper className={classes.paper} style={{height: this.getChildComponentHeight()}}>
+            <Paper className={classes.paper} style={{height: this.getPaperHeight()}}>
               <SideMenu />
             </Paper>
           </Grid>
           <Grid item xs={9}>
-            <Paper className={classes.paper} style={{height: this.getChildComponentHeight()}}>
+            <Paper className={classes.paper} style={{height: this.getPaperHeight()}}>
               <Route path="/" exact component={Home} />
               <Route path="/login" component={Login} />
             </Paper>
           </Grid>
         </Grid>
-        <Paper className={classes.paper}>
-          <Footer />
-        </Paper>
       </div>
     );
   }
