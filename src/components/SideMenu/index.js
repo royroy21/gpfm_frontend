@@ -11,7 +11,6 @@ import MessageIcon from '@material-ui/icons/Message';
 import SettingsIcon from '@material-ui/icons/Settings';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 
-
 class SideMenu extends React.Component {
 
   render() {
