@@ -53,11 +53,8 @@ class Root extends React.Component {
     });
   };
 
-  getScreenDimensions() {
-    return {
-      height: `${this.state.screenHeight}px`,
-      width: `${this.state.screenWidth}px`,
-    }
+  getScreenHeight() {
+    return `${this.state.screenHeight}px`;
   }
 
   getPaperHeight() {
@@ -68,7 +65,7 @@ class Root extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root} style={this.getScreenDimensions()}>
+      <div className={classes.root} style={{height: this.getScreenHeight()}}>
         <GPAppBar />
         <Grid container spacing={2}>
           <Grid item xs={3}>
