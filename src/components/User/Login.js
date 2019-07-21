@@ -32,9 +32,6 @@ class Login extends React.Component {
 
   render (){
     const { classes } = this.props;
-
-    console.log("props: ", this.props);
-
     return (
       <form onSubmit={this.handleSubmit}>
         <TextField
@@ -64,3 +61,5 @@ class Login extends React.Component {
 }
 
 export default withStyles(styles)(Login)
+
+// TODO - add proptypes here

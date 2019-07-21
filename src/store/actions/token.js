@@ -1,4 +1,5 @@
-import axios from 'axios';
+import {createPost} from "../../api/post";
+import {tokenLoginURL} from "../../api/urls";
 
 export const POST_TOKEN_BEGIN   = 'POST_TOKEN_BEGIN';
 export const POST_TOKEN_SUCCESS = 'POST_TOKEN_SUCCESS';
@@ -19,27 +20,10 @@ export const postTokenError = error => ({
   payload: { error }
 });
 
-export function postToken(data) {
-  return dispatch => {
-    dispatch(postTokenBegin(data));
-    return axios.post("http://localhost:8000/auth/token/login/", data)
-      .then(handleErrors)
-      .then(response => {
-        dispatch(postTokenSuccess(response.data));
-        return response.data;
-      })
-      .catch(error => dispatch(postTokenError(error.response.data)));
-  };
-}
-
-function handleErrors(response) {
-  const successfulStatusCodes = [
-    200,
-    201,
-  ];
-
-  if (!successfulStatusCodes.includes(response.status)) {
-    throw Error(response.data);
-  }
-  return response;
-}
+export const postToken = (data) => createPost(
+  data,
+  tokenLoginURL,
+  postTokenBegin,
+  postTokenSuccess,
+  postTokenError,
+);
