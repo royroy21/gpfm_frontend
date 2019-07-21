@@ -2,8 +2,6 @@ import React from 'react';
 import {withStyles} from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
-import {connect} from "react-redux";
-import {postToken} from "../../store/actions/token";
 
 const styles = theme => ({
   button: {
@@ -23,7 +21,7 @@ class Login extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const data = this.state;
-    this.props.dispatch(postToken(data));
+    this.props.actions.postToken(data);
   };
 
   handleChange = (event) => {
@@ -65,10 +63,4 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.user,
-  loading: state.loading,
-  error: state.error
-});
-
-export default withStyles(styles)(connect(mapStateToProps)(Login))
+export default withStyles(styles)(Login)

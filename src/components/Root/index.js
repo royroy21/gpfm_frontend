@@ -6,8 +6,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { Route } from "react-router-dom";
 
 import GPAppBar from "../GPAppBar";
-import Login from "../User/Login";
 import SideMenu from "../SideMenu";
+import LoginContainer from "../../containers/Login";
 
 const styles = theme => ({
   root: {
@@ -77,7 +77,7 @@ class Root extends React.Component {
           <Grid item xs={9}>
             <Paper className={classes.paper} style={{height: this.getPaperHeight()}}>
               <Route path="/" exact component={Home} />
-              <Route path="/login" component={Login} />
+              <Route path="/login" component={LoginContainer} />
             </Paper>
           </Grid>
         </Grid>
