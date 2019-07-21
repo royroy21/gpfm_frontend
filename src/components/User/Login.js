@@ -3,7 +3,7 @@ import {withStyles} from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import {connect} from "react-redux";
-import {postLogin} from "../../store/actions";
+import {postToken} from "../../store/actions/token";
 
 const styles = theme => ({
   button: {
@@ -23,7 +23,7 @@ class Login extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const data = this.state;
-    this.props.dispatch(postLogin(data));
+    this.props.dispatch(postToken(data));
   };
 
   handleChange = (event) => {

@@ -1,39 +1,39 @@
 import {
-  POST_LOGIN_BEGIN,
-  POST_LOGIN_SUCCESS,
-  POST_LOGIN_ERROR,
-} from './actions';
+  POST_TOKEN_BEGIN,
+  POST_TOKEN_SUCCESS,
+  POST_TOKEN_ERROR,
+} from './../actions/token';
 
 const initialState = {
-  user: {},
+  auth_token: null,
   loading: false,
   error: null
 };
 
-const loginReducer = (state = initialState, action) => {
+const tokenReducer = (state = initialState, action) => {
   switch(action.type) {
-    case POST_LOGIN_BEGIN:
+    case POST_TOKEN_BEGIN:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case POST_LOGIN_SUCCESS:
+    case POST_TOKEN_SUCCESS:
         return {
         ...state,
         loading: false,
-        user: action.payload.data,
+        auth_token: action.payload.data.auth_token,
       };
-    case POST_LOGIN_ERROR:
+    case POST_TOKEN_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
-        user: {},
+        auth_token: null,
       };
     default:
       return state
   }
 };
 
-export default loginReducer;
+export default tokenReducer;

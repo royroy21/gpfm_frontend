@@ -34,7 +34,8 @@ class Root extends React.Component {
   paperHeightDifference = 125;
 
   state = {
-    screenWidth: 0, screenHeight: 0
+    screenWidth: 0,
+    screenHeight: 0,
   };
 
   componentDidMount() {
