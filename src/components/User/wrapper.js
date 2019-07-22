@@ -4,8 +4,9 @@ import { postToken } from '../../store/actions/token'
 const mapStateToProps = (state) => {
   return {
     store: {
-      token: state.token
-    }
+      token: state.token,
+      user: state.user,
+    },
   }
 };
 

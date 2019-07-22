@@ -1,5 +1,6 @@
 import {createPost} from "../../api/post";
 import {tokenLoginURL} from "../../api/urls";
+import {getUser} from "./user";
 
 export const POST_TOKEN_BEGIN   = 'POST_TOKEN_BEGIN';
 export const POST_TOKEN_SUCCESS = 'POST_TOKEN_SUCCESS';
@@ -26,4 +27,5 @@ export const postToken = (data) => createPost(
   postTokenBegin,
   postTokenSuccess,
   postTokenError,
+  [getUser]
 );

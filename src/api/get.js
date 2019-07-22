@@ -3,24 +3,19 @@ import {handleErrors} from "./handleErrors";
 
 const successfulStatusCodes = [
   200,
-  201,
 ];
 
-export const createPost = (
-    data, url, beginAction, successAction, errorAction, extraActions=null) => {
+export const createGet = (url, beginAction, successAction, errorAction) => {
   return (dispatch, getState) => {
-    dispatch(beginAction(data));
+    dispatch(beginAction());
 
     const authToken = getState().token.auth_token;
-    const headers = authToken ? {Authorization: `Token ${authToken}`} : null;
+    const headers = authToken ? {headers: {Authorization: `Token ${authToken}`}} : null;
 
-    return axios.post(url, data, headers)
+    return axios.get(url, headers)
       .then(response => handleErrors(response, successfulStatusCodes))
       .then(response => {
         dispatch(successAction(response.data));
-        if (extraActions) {
-          extraActions.forEach(action => {dispatch(action())})
-        }
         return response.data;
       })
       .catch(error => dispatch(errorAction(error.response.data)));
