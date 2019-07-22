@@ -7,7 +7,7 @@ import { Route } from "react-router-dom";
 
 import GPAppBar from "../GPAppBar";
 import SideMenu from "../SideMenu";
-import LoginContainer from "../../containers/Login";
+import Login from "../User/Login";
 
 const styles = theme => ({
   root: {
@@ -77,7 +77,7 @@ class Root extends React.Component {
           <Grid item xs={9}>
             <Paper className={classes.paper} style={{height: this.getPaperHeight()}}>
               <Route path="/" exact component={Home} />
-              <Route path="/login" component={LoginContainer} />
+              <Route path="/login" component={Login} />
             </Paper>
           </Grid>
         </Grid>

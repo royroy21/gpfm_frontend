@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-import { postToken } from '../store/actions/token'
-import Login from '../components/User/Login'
+import { postToken } from '../../store/actions/token'
 
 const mapStateToProps = (state) => {
   return {
@@ -20,9 +19,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-const LoginContainer = connect(
+const LoginWrapper = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+);
 
-export default LoginContainer
+export default LoginWrapper

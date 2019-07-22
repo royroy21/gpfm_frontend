@@ -2,6 +2,7 @@ import React from 'react';
 import {withStyles} from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
+import LoginWrapper from "./wrapper";
 
 const styles = theme => ({
   button: {
@@ -60,6 +61,6 @@ class Login extends React.Component {
   }
 }
 
-export default withStyles(styles)(Login)
+export default withStyles(styles)(LoginWrapper(Login))
 
 // TODO - add proptypes here
