@@ -3,12 +3,16 @@ import {withStyles} from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import LoginWrapper from "./wrapper";
+import NonFieldErrors from "../Errors/NonFieldErrors";
 
 const styles = theme => ({
   button: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  error: {
+    color: theme.palette.secondary.main,
+  }
 });
 
 
@@ -18,6 +22,12 @@ class Login extends React.Component {
     username: '',
     password: '',
   };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.store.user.object) {
+      this.props.history.push("/");
+    }
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -36,6 +46,9 @@ class Login extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <TextField
+          error={!!this.props.store.token.error}
+          autoFocus
+          required
           id="username"
           label="Username"
           name="username"
@@ -44,6 +57,8 @@ class Login extends React.Component {
           margin="normal"
         /><br />
         <TextField
+          error={!!this.props.store.token.error}
+          required
           id="password"
           label="Password"
           name="password"
@@ -56,6 +71,7 @@ class Login extends React.Component {
         <Button type="submit" className={classes.button}>
           LOGIN
         </Button>
+        <NonFieldErrors error={this.props.store.token.error}/>
       </form>
     )
   }
