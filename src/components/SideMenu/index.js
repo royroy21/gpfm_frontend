@@ -10,10 +10,17 @@ import EventIcon from '@material-ui/icons/Event';
 import MessageIcon from '@material-ui/icons/Message';
 import SettingsIcon from '@material-ui/icons/Settings';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import SideMenuWrapper from "./wrapper";
 
 class SideMenu extends React.Component {
 
+  logout = () => {
+    this.props.actions.logout();
+  };
+
   render() {
+    const {object: user} = this.props.store.user;
+
     return (
       <MenuList>
         <MenuItem >
@@ -52,15 +59,23 @@ class SideMenu extends React.Component {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem >
-          <ListItemIcon>
-            <KeyboardReturnIcon />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        {user ? (
+          <div onClick={this.logout}>
+            <MenuItem >
+              <ListItemIcon>
+                <KeyboardReturnIcon />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </div>
+          )
+          : (
+            null
+          )
+        }
       </MenuList>
     )
   }
 }
 
-export default SideMenu
+export default SideMenuWrapper(SideMenu);

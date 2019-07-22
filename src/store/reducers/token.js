@@ -2,6 +2,7 @@ import {
   POST_TOKEN_BEGIN,
   POST_TOKEN_SUCCESS,
   POST_TOKEN_ERROR,
+  CLEAR_TOKEN,
 } from './../actions/token';
 
 const initialState = {
@@ -30,6 +31,12 @@ const tokenReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload.error,
         object: null,
+      };
+    case CLEAR_TOKEN:
+      return {
+        object: null,
+        loading: false,
+        error: null
       };
     default:
       return state
