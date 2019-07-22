@@ -11,8 +11,8 @@ export const createPost = (
   return (dispatch, getState) => {
     dispatch(beginAction(data));
 
-    const authToken = getState().token.auth_token;
-    const headers = authToken ? {Authorization: `Token ${authToken}`} : null;
+    const {object: authToken} = getState().token;
+    const headers = authToken ? {headers: {Authorization: `Token ${authToken.auth_token}`}} : null;
 
     return axios.post(url, data, headers)
       .then(response => handleErrors(response, successfulStatusCodes))

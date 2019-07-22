@@ -5,7 +5,7 @@ import {
 } from './../actions/user';
 
 const initialState = {
-  user: null,
+  object: null,
   loading: false,
   error: null
 };
@@ -22,14 +22,14 @@ const userReducer = (state = initialState, action) => {
         return {
         ...state,
         loading: false,
-        user: action.payload.data,
+        object: action.payload.data,
       };
     case GET_USER_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload.error,
-        user: null,
+        object: null,
       };
     default:
       return state

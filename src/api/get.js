@@ -9,8 +9,8 @@ export const createGet = (url, beginAction, successAction, errorAction) => {
   return (dispatch, getState) => {
     dispatch(beginAction());
 
-    const authToken = getState().token.auth_token;
-    const headers = authToken ? {headers: {Authorization: `Token ${authToken}`}} : null;
+    const {object: authToken} = getState().token;
+    const headers = authToken ? {headers: {Authorization: `Token ${authToken.auth_token}`}} : null;
 
     return axios.get(url, headers)
       .then(response => handleErrors(response, successfulStatusCodes))
