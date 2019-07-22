@@ -1,5 +1,5 @@
-import {createGet} from "../../api/get";
 import {userDetailsURL} from "../../api/urls";
+import DispatchAPI from "../../api";
 
 export const GET_USER_BEGIN   = 'GET_USER_BEGIN';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
@@ -19,7 +19,7 @@ export const getUserError = error => ({
   payload: { error }
 });
 
-export const getUser = () => createGet(
+export const getUser = () => new DispatchAPI().dispatchGet(
   userDetailsURL,
   getUserBegin,
   getUserSuccess,
