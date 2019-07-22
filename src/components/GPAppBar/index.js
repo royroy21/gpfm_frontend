@@ -11,14 +11,19 @@ import {withStyles} from "@material-ui/core";
 
 import pig2 from "../../images/pig2.svg"
 import {Link} from "react-router-dom";
+import GPAppBarWrapper from "./wrapper";
 
 const styles = theme => ({
   appBar: {
     backgroundColor: theme.palette.primary.main,
   },
-  button: {
+  loginButton: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+  },
+  usernameButton: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.primary.main,
   },
   title: {
     flexGrow: 1,
@@ -59,6 +64,8 @@ class GPAppBar extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const {object: user} = this.props.store.user;
+
     return (
       <AppBar className={classes.appBar} position="static">
         <Toolbar>
@@ -80,15 +87,23 @@ class GPAppBar extends React.Component {
               inputProps={{'aria-label': 'Search'}}
             />
           </div>
-          <Link to="/login" style={{textDecoration: "none"}}>
-            <Button className={classes.button}>
-              LOGIN
-            </Button>
-           </Link>
+          {user ? (
+              <Button className={classes.usernameButton}>
+                {user.username}
+              </Button>
+            )
+            : (
+            <Link to="/login" style={{textDecoration: "none"}}>
+              <Button className={classes.loginButton}>
+                LOGIN
+              </Button>
+             </Link>
+            )
+          }
         </Toolbar>
       </AppBar>
     )
   }
 }
 
-export default withStyles(styles)(GPAppBar);
+export default withStyles(styles)(GPAppBarWrapper(GPAppBar));
