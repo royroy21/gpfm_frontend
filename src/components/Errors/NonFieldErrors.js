@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {withStyles} from "@material-ui/core";
 import PropTypes from 'prop-types';
 
@@ -13,15 +13,15 @@ class NonFieldErrors extends React.Component {
 
   render (){
     const { classes } = this.props;
-    return (
-      <Fragment>
-      {this.props.error ? (
-        <p className={classes.error}>{this.props.error.non_field_errors}</p>
-        ) : (
-          null
-        )}
-      </Fragment>
-    );
+    if (!this.props.error) {
+      return null;
+    } else {
+      const { non_field_errors: nonFieldErrors } = this.props.error;
+      return (
+        nonFieldErrors.map((errorMessage, index) =>
+          <p key={index} className={classes.error}>{errorMessage}</p>)
+      )
+    }
   }
 }
 
