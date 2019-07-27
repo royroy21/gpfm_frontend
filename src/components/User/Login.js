@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import LoginWrapper from "./wrapper";
 import NonFieldErrors from "../Errors/NonFieldErrors";
+import LoadingModal from "../LoadingModal";
 
 const styles = theme => ({
   button: {
@@ -72,6 +73,7 @@ class Login extends React.Component {
           LOGIN
         </Button>
         <NonFieldErrors error={this.props.store.token.error}/>
+        <LoadingModal loading={this.props.store.token.loading || this.props.store.user.loading}/>
       </form>
     )
   }
