@@ -61,6 +61,7 @@ class Register extends React.Component {
           margin="normal"
         /><br />
         <TextField
+          type={"password"}
           error={!!passwordError}
           required
           id="password"

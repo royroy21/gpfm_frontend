@@ -59,6 +59,7 @@ class Login extends React.Component {
             margin="normal"
           /><br />
           <TextField
+            type={"password"}
             error={!!this.props.store.token.error}
             required
             id="password"
