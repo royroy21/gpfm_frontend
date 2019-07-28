@@ -9,19 +9,28 @@ import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Divider from "@material-ui/core/Divider";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormGroup from "@material-ui/core/FormGroup";
+import Switch from "@material-ui/core/Switch";
 
 const styles = theme => ({
   button: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  formGroup: {
+    width: "30%",
+  },
 });
 
 class Login extends React.Component {
 
   state = {
-    username: '',
-    password: '',
+    formData: {
+      username: '',
+      password: '',
+    },
+    showPassword: false,
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -32,14 +41,20 @@ class Login extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const data = this.state;
+    const data = this.state.formData;
     this.props.actions.postToken(data);
   };
 
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+    const formData = this.state.formData;
+    formData[event.target.name] = event.target.value;
+    this.setState({formData});
+  };
+
+  toggleShowPassword = () => {
+    this.setState(state => {
+      return {showPassword: !state.showPassword}
+    })
   };
 
   render (){
@@ -47,40 +62,48 @@ class Login extends React.Component {
     return (
       <Fragment>
         <form onSubmit={this.handleSubmit}>
-          <TextField
-            error={!!this.props.store.token.error}
-            autoFocus
-            required
-            id="username"
-            label="Username"
-            name="username"
-            value={this.state.username}
-            onChange={this.handleChange}
-            margin="normal"
-          /><br />
-          <TextField
-            type={"password"}
-            error={!!this.props.store.token.error}
-            required
-            id="password"
-            label="Password"
-            name="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-            margin="normal"
-          />
-          <br />
-          <br />
-          <Button type="submit" className={classes.button}>
-            LOGIN
-          </Button>
-          <Errors error={this.props.store.token.error}/>
-          <LoadingModal
-            loading={!!this.props.store.token.loading || !!this.props.store.user.loading}
-            error={!!this.props.store.token.error || !!this.props.store.user.error}
-            successMessage={"Logged In"}
-            withSuccess
-          />
+          <FormGroup className={classes.formGroup}>
+            <TextField
+              error={!!this.props.store.token.error}
+              autoFocus
+              required
+              id="username"
+              label="Username"
+              name="username"
+              value={this.state.formData.username}
+              onChange={this.handleChange}
+              margin="normal"
+            />
+            <TextField
+              type={this.state.showPassword ? "text" : "password"}
+              error={!!this.props.store.token.error}
+              required
+              id="password"
+              label="Password"
+              name="password"
+              value={this.state.formData.password}
+              onChange={this.handleChange}
+              margin="normal"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={this.state.showPassword}
+                  onChange={this.toggleShowPassword}
+                />              }
+              label={this.state.showPassword ? "Password visible" : "Password hidden"}
+            />
+            <Button type="submit" className={classes.button}>
+              LOGIN
+            </Button>
+            <Errors error={this.props.store.token.error}/>
+            <LoadingModal
+              loading={!!this.props.store.token.loading || !!this.props.store.user.loading}
+              error={!!this.props.store.token.error || !!this.props.store.user.error}
+              successMessage={"Logged In"}
+              withSuccess
+            />
+          </FormGroup>
         </form>
         <br />
         <Divider />
