@@ -25,6 +25,10 @@ class Register extends React.Component {
     password: '',
   };
 
+  componentDidMount() {
+    this.props.actions.clearRegister();
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.store.user.object) {
       setTimeout(() => this.props.history.push("/"), 1500);

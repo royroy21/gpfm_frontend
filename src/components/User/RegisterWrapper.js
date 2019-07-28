@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import {postRegister} from "../../store/actions/register";
+import {CLEAR_REGISTER, postRegister} from "../../store/actions/register";
 
 const mapStateToProps = (state) => {
   return {
@@ -16,7 +16,10 @@ const mapDispatchToProps = (dispatch) => {
     actions: {
       postRegister: (data) => {
         dispatch(postRegister(data))
-      }
+      },
+      clearRegister: () => {
+        dispatch({type: CLEAR_REGISTER});
+      },
     }
   }
 };

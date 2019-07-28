@@ -8,7 +8,7 @@ import {
 const initialState = {
   object: null,
   loading: false,
-  error: null
+  error: null,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -36,7 +36,7 @@ const userReducer = (state = initialState, action) => {
       return {
         object: null,
         loading: false,
-        error: null
+        error: null,
       };
     default:
       return state
