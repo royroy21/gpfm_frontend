@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { postToken } from '../../store/actions/token'
+import {CLEAR_TOKEN, postToken} from '../../store/actions/token'
+import {CLEAR_USER} from "../../store/actions/user";
 
 const mapStateToProps = (state) => {
   return {
@@ -15,7 +16,13 @@ const mapDispatchToProps = (dispatch) => {
     actions: {
       postToken: (data) => {
         dispatch(postToken(data))
-      }
+      },
+      clearToken: () => {
+        dispatch({type: CLEAR_TOKEN});
+      },
+      clearUser: () => {
+        dispatch({type: CLEAR_USER});
+      },
     }
   }
 };

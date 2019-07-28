@@ -33,6 +33,11 @@ class Login extends React.Component {
     showPassword: false,
   };
 
+  componentDidMount() {
+    this.props.actions.clearToken();
+    this.props.actions.clearUser();
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.store.user.object) {
       setTimeout(() => this.props.history.push("/"), 1500);
