@@ -11,11 +11,13 @@ import MessageIcon from '@material-ui/icons/Message';
 import SettingsIcon from '@material-ui/icons/Settings';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import SideMenuWrapper from "./wrapper";
+import {withRouter} from "react-router-dom";
 
 class SideMenu extends React.Component {
 
   logout = () => {
     this.props.actions.logout();
+    this.props.history.push("/login");
   };
 
   render() {
@@ -78,4 +80,4 @@ class SideMenu extends React.Component {
   }
 }
 
-export default SideMenuWrapper(SideMenu);
+export default SideMenuWrapper(withRouter(SideMenu));
