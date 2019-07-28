@@ -29,25 +29,25 @@ class SideMenu extends React.Component {
 
     return (
       <MenuList>
-        <MenuItem >
+        <MenuItem>
           <ListItemIcon>
             <SendIcon />
           </ListItemIcon>
           Looking for Gigpigs
         </MenuItem>
-        <MenuItem >
+        <MenuItem>
           <ListItemIcon>
             <LibraryMusicIcon />
           </ListItemIcon>
           You're a Gigpig
         </MenuItem>
-        <MenuItem >
+        <MenuItem>
           <ListItemIcon>
             <MessageIcon />
           </ListItemIcon>
           Messages
         </MenuItem>
-        <MenuItem >
+        <MenuItem>
           <ListItemIcon>
             <EventIcon />
           </ListItemIcon>
