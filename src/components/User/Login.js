@@ -26,7 +26,7 @@ class Login extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.store.user.object) {
-      this.props.history.push("/");
+      setTimeout(() => this.props.history.push("/"), 1500);
     }
   }
 
@@ -73,7 +73,12 @@ class Login extends React.Component {
           LOGIN
         </Button>
         <NonFieldErrors error={this.props.store.token.error}/>
-        <LoadingModal loading={this.props.store.token.loading || this.props.store.user.loading}/>
+        <LoadingModal
+          loading={this.props.store.token.loading || this.props.store.user.loading}
+          error={this.props.store.token.error || this.props.store.user.error}
+          successMessage={"Logged In"}
+          withSuccess
+        />
       </form>
     )
   }
