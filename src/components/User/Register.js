@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import LoadingModal from "../LoadingModal";
 import RegisterWrapper from "./RegisterWrapper";
 import Errors from "../Errors/Errors";
+import {getFieldError} from "../../utils/form";
 
 const styles = theme => ({
   button: {
@@ -42,29 +43,10 @@ class Register extends React.Component {
     });
   };
 
-  getFieldError(fieldName) {
-    const {error} = this.props.store.register;
-    if (!error) {
-      return false
-    }
-    if (error[fieldName]) {
-      return error[fieldName]
-    } else {
-      return false
-    }
-  }
-
   render (){
     const { classes } = this.props;
-
-    console.log("props: ", this.props);
-    console.log("state: ", this.state);
-
-    const usernameError = this.getFieldError("username");
-    const passwordError = this.getFieldError("password");
-
-    console.log("usernameError: ", usernameError);
-
+    const usernameError = getFieldError(this.props.store.register.error, "username");
+    const passwordError = getFieldError(this.props.store.register.error, "password");
     return (
       <form onSubmit={this.handleSubmit}>
         <TextField
