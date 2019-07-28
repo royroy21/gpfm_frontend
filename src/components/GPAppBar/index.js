@@ -10,7 +10,7 @@ import {fade} from "@material-ui/core/styles";
 import {withStyles} from "@material-ui/core";
 
 import pig2 from "../../images/pig2.svg"
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import GPAppBarWrapper from "./wrapper";
 
 const styles = theme => ({
@@ -20,6 +20,9 @@ const styles = theme => ({
   loginButton: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+  },
+  loginLink: {
+    textDecoration: "none",
   },
   usernameButton: {
     margin: theme.spacing(1),
@@ -62,10 +65,35 @@ const styles = theme => ({
 
 class GPAppBar extends React.Component {
 
-  render() {
+  getLoginButton() {
     const { classes } = this.props;
     const {object: user} = this.props.store.user;
+    if (user) {
+      return (
+        <Button className={classes.usernameButton}>
+          {user.username}
+        </Button>
+      )
+    }
+    if (this.props.location.pathname === "/login") {
+      return (
+        <Button className={classes.usernameButton}>
+          LOGIN
+        </Button>
+      )
+    } else {
+      return (
+        <Link to="/login" className={classes.loginLink}>
+          <Button className={classes.loginButton}>
+            LOGIN
+          </Button>
+         </Link>
+      )
+    }
+  }
 
+  render() {
+    const { classes } = this.props;
     return (
       <AppBar className={classes.appBar} position="static">
         <Toolbar>
@@ -87,23 +115,11 @@ class GPAppBar extends React.Component {
               inputProps={{'aria-label': 'Search'}}
             />
           </div>
-          {user ? (
-              <Button className={classes.usernameButton}>
-                {user.username}
-              </Button>
-            )
-            : (
-            <Link to="/login" style={{textDecoration: "none"}}>
-              <Button className={classes.loginButton}>
-                LOGIN
-              </Button>
-             </Link>
-            )
-          }
+          {this.getLoginButton()}
         </Toolbar>
       </AppBar>
     )
   }
 }
 
-export default withStyles(styles)(GPAppBarWrapper(GPAppBar));
+export default withStyles(styles)(GPAppBarWrapper(withRouter(GPAppBar)));
