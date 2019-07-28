@@ -33,10 +33,12 @@ class SuccessNotification extends React.Component {
       <div className={classes.progressContainer}>
         <div className={classes.notification}>
           <table className={classes.table}>
-            <tr>
-              <th><h4>{this.props.successMessage}</h4></th>
-              <th><ThumbUpIcon /></th>
-            </tr>
+            <tbody>
+              <tr>
+                <th><h4>{this.props.successMessage}</h4></th>
+                <th><ThumbUpIcon /></th>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
