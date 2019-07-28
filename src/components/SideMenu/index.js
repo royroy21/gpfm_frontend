@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
@@ -14,6 +14,10 @@ import SideMenuWrapper from "./wrapper";
 import {withRouter} from "react-router-dom";
 
 class SideMenu extends React.Component {
+
+  register = () => {
+    this.props.history.push("/register");
+  };
 
   logout = () => {
     this.props.actions.logout();
@@ -49,27 +53,36 @@ class SideMenu extends React.Component {
           </ListItemIcon>
           Events
         </MenuItem>
-        <MenuItem >
-          <ListItemIcon>
-            <AccountCircleIcon />
-          </ListItemIcon>
-          My account
-        </MenuItem>
-        <MenuItem >
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
         {user ? (
-          <div onClick={this.logout}>
-            <MenuItem >
+          <Fragment>
+            <MenuItem>
               <ListItemIcon>
-                <KeyboardReturnIcon />
+                <AccountCircleIcon />
               </ListItemIcon>
-              Logout
+              My account
             </MenuItem>
-          </div>
+            <MenuItem>
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              Settings
+            </MenuItem>
+          </Fragment>
+        ) : (
+          <MenuItem onClick={this.register}>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            Register User
+          </MenuItem>
+        )}
+        {user ? (
+          <MenuItem onClick={this.logout}>
+            <ListItemIcon>
+              <KeyboardReturnIcon />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
           )
           : (
             null
