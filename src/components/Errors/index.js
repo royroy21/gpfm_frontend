@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 const styles = theme => ({
   error: {
-    marginTop: theme.spacing(2),
+    margin: "10px 0 0 0",
+    padding: "0",
     color: theme.palette.secondary.main,
   }
 });
