@@ -15,11 +15,7 @@ const styles = theme => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
-  error: {
-    color: theme.palette.secondary.main,
-  },
 });
-
 
 class Login extends React.Component {
 
