@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import LoadingModal from "../LoadingModal";
 import RegisterWrapper from "./RegisterWrapper";
-import Errors from "../Errors/Errors";
+import Errors from "../Errors";
 import {getFieldError} from "../../utils/form";
 
 const styles = theme => ({
@@ -78,9 +78,9 @@ class Register extends React.Component {
         <Errors error={this.props.store.register.error} />
         <LoadingModal
           loading={
-            this.props.store.token.loading
-            || this.props.store.user.loading
-            || this.props.store.register.loading
+            !! this.props.store.token.loading
+            || !!this.props.store.user.loading
+            || !!this.props.store.register.loading
           }
           error={
             !!this.props.store.token.error
