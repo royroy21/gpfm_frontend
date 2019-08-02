@@ -28,7 +28,7 @@ class Register extends React.Component {
 
   state = {
     formData: {
-      username: '',
+      email: '',
       password: '',
     },
     showPassword: false,
@@ -64,19 +64,19 @@ class Register extends React.Component {
 
   render (){
     const { classes } = this.props;
-    const usernameError = getFieldError(this.props.store.register.error, "username");
+    const emailError = getFieldError(this.props.store.register.error, "email");
     const passwordError = getFieldError(this.props.store.register.error, "password");
     return (
       <form onSubmit={this.handleSubmit}>
         <FormGroup className={classes.formGroup}>
           <TextField
-            error={!!usernameError}
+            error={!!emailError}
             autoFocus
             required
-            id="username"
-            label="Username"
-            name="username"
-            value={this.state.formData.username}
+            id="email"
+            label="Email"
+            name="email"
+            value={this.state.formData.email}
             onChange={this.handleChange}
             margin="normal"
           />

@@ -27,7 +27,7 @@ class Login extends React.Component {
 
   state = {
     formData: {
-      username: '',
+      email: '',
       password: '',
     },
     showPassword: false,
@@ -72,10 +72,10 @@ class Login extends React.Component {
               error={!!this.props.store.token.error}
               autoFocus
               required
-              id="username"
-              label="Username"
-              name="username"
-              value={this.state.formData.username}
+              id="email"
+              label="Email"
+              name="email"
+              value={this.state.formData.email}
               onChange={this.handleChange}
               margin="normal"
             />
