@@ -12,20 +12,31 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import SideMenuWrapper from "./wrapper";
 import {withRouter} from "react-router-dom";
+import {accountRoute, loginRoute, registerRoute} from "../../settings/internalRoutes";
 
 class SideMenu extends React.Component {
 
+  account = () => {
+    this.props.history.push(accountRoute);
+  };
+
   register = () => {
-    this.props.history.push("/register");
+    this.props.history.push(registerRoute);
   };
 
   logout = () => {
     this.props.actions.logout();
-    this.props.history.push("/login");
+    this.props.history.push(loginRoute);
+  };
+
+  login = () => {
+    this.props.history.push(loginRoute);
   };
 
   render() {
     const {object: user} = this.props.store.user;
+    const isRegistrationPage =
+      this.props.history.location.pathname === registerRoute;
 
     return (
       <MenuList>
@@ -55,7 +66,7 @@ class SideMenu extends React.Component {
         </MenuItem>
         {user ? (
           <Fragment>
-            <MenuItem>
+            <MenuItem onClick={this.account}>
               <ListItemIcon>
                 <AccountCircleIcon />
               </ListItemIcon>
@@ -67,27 +78,21 @@ class SideMenu extends React.Component {
               </ListItemIcon>
               Settings
             </MenuItem>
+            <MenuItem onClick={this.logout}>
+              <ListItemIcon>
+                <KeyboardReturnIcon />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
           </Fragment>
         ) : (
-          <MenuItem onClick={this.register}>
+          <MenuItem onClick={isRegistrationPage ? this.login : this.register}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
-            Register User
+            {isRegistrationPage ? "Login" : "Register User"}
           </MenuItem>
         )}
-        {user ? (
-          <MenuItem onClick={this.logout}>
-            <ListItemIcon>
-              <KeyboardReturnIcon />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
-          )
-          : (
-            null
-          )
-        }
       </MenuList>
     )
   }

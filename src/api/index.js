@@ -12,10 +12,20 @@ class DispatchAPI {
   }
 
   dispatchPost(data, url, beginAction, successAction, errorAction, extraActions=null) {
+    return this.dispatchWithData(
+      axios.post, data, url, beginAction, successAction, errorAction, extraActions);
+  }
+
+  dispatchPatch(data, url, beginAction, successAction, errorAction, extraActions=null) {
+    return this.dispatchWithData(
+      axios.patch, data, url, beginAction, successAction, errorAction, extraActions);
+  }
+
+  dispatchWithData(action, data, url, beginAction, successAction, errorAction, extraActions=null) {
     return (dispatch, getState) => {
       dispatch(beginAction());
       const headers = this.getAuthorizationHeaders(getState);
-      return axios.post(url, data, headers)
+      return action(url, data, headers)
         .then(response => this.handleErrors(response, this.successfulStatusCodes))
         .then(response => {
           dispatch(successAction(response.data));
@@ -27,10 +37,15 @@ class DispatchAPI {
   }
 
   dispatchGet(url, beginAction, successAction, errorAction, extraActions=null) {
+    return this.dispatchWithoutData(
+      axios.get, url, beginAction, successAction, errorAction, extraActions);
+  }
+
+  dispatchWithoutData(action ,url, beginAction, successAction, errorAction, extraActions=null) {
     return (dispatch, getState) => {
       dispatch(beginAction());
       const headers = this.getAuthorizationHeaders(getState);
-      return axios.get(url, headers)
+      return action(url, headers)
         .then(response => this.handleErrors(response, this.successfulStatusCodes))
         .then(response => {
           dispatch(successAction(response.data));

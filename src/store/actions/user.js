@@ -12,12 +12,12 @@ export const getUserBegin = () => ({
 
 export const getUserSuccess = data => ({
   type: GET_USER_SUCCESS,
-  payload: { data }
+  payload: { data },
 });
 
 export const getUserError = error => ({
   type: GET_USER_ERROR,
-  payload: { error }
+  payload: { error },
 });
 
 export const clearUser = () => ({
@@ -25,6 +25,14 @@ export const clearUser = () => ({
 });
 
 export const getUser = () => new DispatchAPI().dispatchGet(
+  userDetailsURL,
+  getUserBegin,
+  getUserSuccess,
+  getUserError,
+);
+
+export const patchUser = (data) => new DispatchAPI().dispatchPatch(
+  data,
   userDetailsURL,
   getUserBegin,
   getUserSuccess,

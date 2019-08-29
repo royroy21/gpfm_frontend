@@ -30,7 +30,6 @@ const userReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
-        object: null,
       };
     case CLEAR_USER:
       return {

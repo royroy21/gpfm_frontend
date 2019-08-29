@@ -4,18 +4,22 @@ import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
 import {fade} from "@material-ui/core/styles";
 import {withStyles} from "@material-ui/core";
+import PropTypes from "prop-types";
+import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
 
-import pig2 from "../../images/pig2.svg"
 import {Link, withRouter} from "react-router-dom";
 import GPAppBarWrapper from "./wrapper";
+import HandleWithAvatarDisplay from "../UserHandleAvatarDisplay";
+import {loginRoute} from "../../settings/internalRoutes";
+import Form from "../Form";
 
 const styles = theme => ({
   appBar: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: "#424242",
+    // boxShadow: "none",
+    boxShadow: "0 8px 6px -6px black",
   },
   loginButton: {
     margin: theme.spacing(1),
@@ -24,9 +28,18 @@ const styles = theme => ({
   loginLink: {
     textDecoration: "none",
   },
-  usernameButton: {
+  username: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.primary.main,
+    textTransform: "lowercase",
+    color: "#F50057",
+  },
+  menuIcon: {
+    marginRight: "10px",
+    color: "#F50057",
+  },
+  menuIconOnHover: {
+    marginRight: "10px",
+    color: "#F50057",
   },
   title: {
     flexGrow: 1,
@@ -60,6 +73,13 @@ const styles = theme => ({
     width: '50px',
     marginRight: theme.spacing(2),
   },
+  titleLink: {
+    textDecoration: "none",
+    color: "white",
+  },
+  avatar: {
+    margin: 10,
+  },
 });
 
 
@@ -67,28 +87,28 @@ class GPAppBar extends React.Component {
 
   getLoginButton() {
     const { classes } = this.props;
-    const {object: user} = this.props.store.user;
-    if (user) {
+    const isLoggedIn = this.props.store.user.object;
+
+    if (isLoggedIn) {
       return (
-        <Button className={classes.usernameButton}>
-          {user.username}
-        </Button>
-      )
-    }
-    if (this.props.location.pathname === "/login") {
-      return (
-        <Button className={classes.usernameButton}>
-          LOGIN
-        </Button>
+        <HandleWithAvatarDisplay
+          user={this.props.store.user}
+        />
       )
     } else {
-      return (
-        <Link to="/login" className={classes.loginLink}>
-          <Button className={classes.loginButton}>
-            LOGIN
-          </Button>
-         </Link>
-      )
+      if (this.props.location.pathname !== loginRoute) {
+        return (
+          <Link to={loginRoute} className={classes.loginLink}>
+            <Button className={classes.loginButton}>
+              {"Login"}
+            </Button>
+          </Link>
+        )
+      } else {
+        return (
+          null
+        )
+      }
     }
   }
 
@@ -97,24 +117,16 @@ class GPAppBar extends React.Component {
     return (
       <AppBar className={classes.appBar} position="static">
         <Toolbar>
-          <Link to="/">
-            <img className={classes.image} src={pig2} alt="Logo" />
-          </Link>
-            <Typography className={classes.title} variant="h6" noWrap>
-              <Link to="/" style={{textDecoration: "none", color: "white"}}>Gigpig</Link>
-            </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon/>
-            </div>
-            <InputBase
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{'aria-label': 'Search'}}
-            />
-          </div>
+          {this.props.showMenuButton ? (
+            <Link to="/menu">
+              <ViewHeadlineIcon fontSize={"large"} className={classes.menuIcon}/>
+            </Link>
+          ) : (
+            null
+          )}
+          <Typography className={classes.title} variant="h6" noWrap>
+            <Link to="/" className={classes.titleLink}>{"GigPig"}</Link>
+          </Typography>
           {this.getLoginButton()}
         </Toolbar>
       </AppBar>
@@ -123,3 +135,8 @@ class GPAppBar extends React.Component {
 }
 
 export default withStyles(styles)(GPAppBarWrapper(withRouter(GPAppBar)));
+
+Form.propTypes = {
+  showMenuButton: PropTypes.bool.isRequired,
+  lastURL: PropTypes.string,
+};
