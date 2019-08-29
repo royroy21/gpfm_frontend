@@ -21,6 +21,10 @@ class LoginForm extends Form {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.token.object) {
+      const { auth_token: authToken } = this.props.token.object;
+      localStorage.setItem('authToken', authToken);
+    }
     if (this.props.user.object) {
       setTimeout(() => this.props.history.push("/"), 1500);
     }

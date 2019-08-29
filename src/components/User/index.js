@@ -58,24 +58,28 @@ class User extends React.Component {
               buttonLabel={"Register"}
             />
           }
-        />
-        <Route
-          extact path={accountRoute}
-          render={() =>
-            <AccountForm
-              actions={{
-                patchUser: this.props.actions.patchUser,
-              }}
-              history={this.props.history}
-              user={this.props.store.user}
-              error={!!this.props.store.user.error}
-              errors={this.props.store.user.error}
-              loading={!!this.props.store.user.loading}
-              successMessage={"Updated User"}
-              buttonLabel={"Update User"}
-            />
-          }
-        />
+        />{
+          this.props.store.user.object ? (
+          <Route
+            extact path={accountRoute}
+            render={() =>
+              <AccountForm
+                actions={{
+                  patchUser: this.props.actions.patchUser,
+                }}
+                history={this.props.history}
+                user={this.props.store.user}
+                error={!!this.props.store.user.error}
+                errors={this.props.store.user.error}
+                loading={!!this.props.store.user.loading}
+                successMessage={"Updated User"}
+                buttonLabel={"Update User"}
+              />
+            }
+          />
+          ) : (
+            null
+          )}
       </Switch>
     )
   }

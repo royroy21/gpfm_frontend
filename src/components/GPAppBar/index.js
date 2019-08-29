@@ -85,6 +85,15 @@ const styles = theme => ({
 
 class GPAppBar extends React.Component {
 
+  componentDidMount() {
+    const authTokenFromRedux = this.props.store.token.object;
+    const authTokenFromLocalStorage = localStorage.getItem("authToken");
+    if (!authTokenFromRedux && authTokenFromLocalStorage) {
+      this.props.actions.updateToken({"auth_token": authTokenFromLocalStorage});
+      this.props.actions.getUser();
+    }
+  }
+
   getLoginButton() {
     const { classes } = this.props;
     const isLoggedIn = this.props.store.user.object;

@@ -25,6 +25,7 @@ class SideMenu extends React.Component {
   };
 
   logout = () => {
+    localStorage.removeItem("authToken");
     this.props.actions.logout();
     this.props.history.push(loginRoute);
   };
