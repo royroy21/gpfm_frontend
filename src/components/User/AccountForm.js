@@ -10,6 +10,8 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import PropTypes from "prop-types";
 import Form from "../Form";
 import {getFieldError} from "../../utils/form";
+import moment from "moment";
+import {KeyboardDatePicker} from "@material-ui/pickers";
 
 const styles = theme => ({
   button: {
@@ -34,6 +36,7 @@ class AccountForm extends Form {
       handle: '',
       avatar: '',
       bio: '',
+      dob: null,
     },
     forceBlankImage: false,
   };
@@ -41,10 +44,16 @@ class AccountForm extends Form {
   imageInput = React.createRef();
 
   componentDidMount() {
+    const {
+      bio,
+      dob,
+      handle,
+    } = this.props.user.object;
     const formData = {
-      handle: this.props.user.object.handle,
+      handle: handle,
       avatar: null,
-      bio: this.props.user.object.bio,
+      bio: bio,
+      dob: dob ? new moment(dob) : null,
     };
     this.setState({formData});
     this.setState({forceBlankImage: !this.props.user.object.avatar})
@@ -87,11 +96,19 @@ class AccountForm extends Form {
     return formAvatarSrc ? formAvatarSrc : userAvatarSrc;
   };
 
+  handleDOBChange = (date) => {
+    const formData = {
+      ...this.state.formData,
+      dob: date,
+    };
+    this.setState({formData});
+    this.formData.append("dob", date.format("YYYY-MM-DD"));
+  };
+
   getFields (){
     const { classes } = this.props;
     const handleError = getFieldError(this.props.user.error, "handle");
     const avatarSrc = this.getAvatarSrc();
-
     return (
       <Fragment>
         <TextField
@@ -151,6 +168,19 @@ class AccountForm extends Form {
           rows={"4"}
           margin={"normal"}
           variant={"outlined"}
+        />
+        <KeyboardDatePicker
+          disableToolbar
+          openTo={"year"}
+          disableFuture
+          variant={"dialog"}
+          format={"DD/MM/YYYY"}
+          margin={"normal"}
+          id={"dob"}
+          name={"dob"}
+          label={"Date of Birth"}
+          value={this.state.formData.dob}
+          onChange={this.handleDOBChange}
         />
       </Fragment>
     )
