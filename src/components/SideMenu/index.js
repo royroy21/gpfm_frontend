@@ -3,10 +3,8 @@ import React, {Fragment} from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import SendIcon from '@material-ui/icons/Send';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
-import EventIcon from '@material-ui/icons/Event';
 import MessageIcon from '@material-ui/icons/Message';
 import SettingsIcon from '@material-ui/icons/Settings';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
@@ -43,27 +41,15 @@ class SideMenu extends React.Component {
       <MenuList>
         <MenuItem>
           <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          Looking for Gigpigs
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
             <LibraryMusicIcon />
           </ListItemIcon>
-          You're a Gigpig
+          {"Gigs"}
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <MessageIcon />
           </ListItemIcon>
-          Messages
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <EventIcon />
-          </ListItemIcon>
-          Events
+          {"Messages"}
         </MenuItem>
         {user ? (
           <Fragment>
@@ -71,19 +57,19 @@ class SideMenu extends React.Component {
               <ListItemIcon>
                 <AccountCircleIcon />
               </ListItemIcon>
-              My account
+              {"My Account"}
             </MenuItem>
             <MenuItem>
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
-              Settings
+              {"Settings"}
             </MenuItem>
             <MenuItem onClick={this.logout}>
               <ListItemIcon>
                 <KeyboardReturnIcon />
               </ListItemIcon>
-              Logout
+              {"Logout"}
             </MenuItem>
           </Fragment>
         ) : (
