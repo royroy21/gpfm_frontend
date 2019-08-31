@@ -3,7 +3,7 @@ import Errors from "../Errors";
 import LoadingModal from "../LoadingModal";
 import FormGroup from "@material-ui/core/FormGroup";
 import PropTypes from "prop-types";
-import GPButton from "../GPButton";
+import FormButton from "../Form/FormButton";
 
 class Form extends React.Component {
 
@@ -46,9 +46,9 @@ class Form extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <FormGroup>
             {this.getFields()}
-            <GPButton type="submit">
+            <FormButton type="submit">
               {this.props.buttonLabel}
-            </GPButton>
+            </FormButton>
             <Errors error={this.props.errors}/>
             <LoadingModal
               loading={!!this.props.loading}

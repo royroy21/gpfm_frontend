@@ -11,7 +11,7 @@ import ViewHeadlineIcon from '@material-ui/icons/ViewHeadline';
 
 import {Link, withRouter} from "react-router-dom";
 import GPAppBarWrapper from "./wrapper";
-import HandleWithAvatarDisplay from "../UserHandleAvatarDisplay";
+import HandleWithAvatarDisplay from "../User/UserHandleAvatarDisplay";
 import {loginRoute} from "../../settings/internalRoutes";
 import Form from "../Form";
 

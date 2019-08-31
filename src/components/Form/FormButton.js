@@ -13,7 +13,7 @@ const styles = theme => ({
 // class that uses withStyles.
 // Poor form material UI :(
 // Prolly should find a better way
-class GPButton extends React.Component {
+class FormButton extends React.Component {
 
   filteredProps() {
     return Object.keys(this.props).reduce((object, key) => {
@@ -35,4 +35,4 @@ class GPButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(GPButton);
+export default withStyles(styles)(FormButton);

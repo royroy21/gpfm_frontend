@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import ClearIcon from '@material-ui/icons/Clear';
 import SyncIcon from '@material-ui/icons/Sync';
-import GPAvatar from "../UserHandleAvatarDisplay/GPAvatar";
+import GPAvatar from "./UserHandleAvatarDisplay/GPAvatar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import PropTypes from "prop-types";
 import Form from "../Form";
