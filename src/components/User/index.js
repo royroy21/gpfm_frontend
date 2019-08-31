@@ -66,9 +66,11 @@ class User extends React.Component {
               <AccountForm
                 actions={{
                   patchUser: this.props.actions.patchUser,
+                  getGenres: this.props.actions.getGenres,
                 }}
                 history={this.props.history}
                 user={this.props.store.user}
+                genres={this.props.store.genres}
                 error={!!this.props.store.user.error}
                 errors={this.props.store.user.error}
                 loading={!!this.props.store.user.loading}

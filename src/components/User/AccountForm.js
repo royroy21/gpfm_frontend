@@ -44,6 +44,11 @@ class AccountForm extends Form {
   imageInput = React.createRef();
 
   componentDidMount() {
+    this.setFormDefaults();
+    this.getGenres();
+  };
+
+  setFormDefaults() {
     const {
       bio,
       dob,
@@ -57,7 +62,13 @@ class AccountForm extends Form {
     };
     this.setState({formData});
     this.setState({forceBlankImage: !this.props.user.object.avatar})
-  };
+  }
+
+  getGenres() {
+    if (!this.props.genres.objects) {
+      this.props.actions.getGenres();
+    }
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();

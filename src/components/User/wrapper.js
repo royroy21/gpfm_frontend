@@ -1,11 +1,14 @@
 import { connect } from 'react-redux'
-import {CLEAR_TOKEN, postToken} from '../../store/actions/token'
-import {CLEAR_USER, patchUser} from "../../store/actions/user";
-import {CLEAR_REGISTER, postRegister} from "../../store/actions/register";
+
+import { CLEAR_TOKEN, postToken } from '../../store/actions/token'
+import { CLEAR_USER, patchUser } from "../../store/actions/user";
+import { CLEAR_REGISTER, postRegister } from "../../store/actions/register";
+import { getGenres } from "../../store/actions/genres";
 
 const mapStateToProps = (state) => {
   return {
     store: {
+      genres: state.genres,
       token: state.token,
       user: state.user,
       register: state.register,
@@ -33,6 +36,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       patchUser: (data) => {
         dispatch(patchUser(data));
+      },
+      getGenres: () => {
+        dispatch(getGenres());
       },
     }
   }
