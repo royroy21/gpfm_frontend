@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -7,18 +7,21 @@ import { Route } from "react-router-dom";
 
 import GPAppBar from "../GPAppBar";
 import SideMenu from "../SideMenu";
-import Login from "../User/Login";
-import Register from "../User/Register";
+import User from "../User"
 
 const styles = theme => ({
   root: {
     backgroundColor: '#5C5C5C',
+    margin: "0",
+    padding: "0",
   },
   paper: {
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     padding: theme.spacing(2),
+    overflowY: "scroll",
+    boxShadow: "0 8px 6px -6px black",
   },
 });
 
@@ -65,24 +68,54 @@ class Root extends React.Component {
   };
 
   render() {
+    const isMobile = this.state.screenWidth < 900;
+    const rightPaperInnerWidth = isMobile ? "99%": "35%";
     const { classes } = this.props;
     return (
       <div className={classes.root} style={{height: this.getScreenHeight()}}>
-        <GPAppBar />
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
-            <Paper className={classes.paper} style={{height: this.getPaperHeight()}}>
-              <SideMenu />
-            </Paper>
-          </Grid>
-          <Grid item xs={9}>
-            <Paper className={classes.paper} style={{height: this.getPaperHeight()}}>
-              <Route path="/" exact component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-            </Paper>
-          </Grid>
-        </Grid>
+        {isMobile ? (
+          <Fragment>
+            <GPAppBar
+              showMenuButton={isMobile}
+            />
+              <Paper
+                className={classes.paper}
+                style={{
+                  height: this.getPaperHeight(),
+                  paddingRight: "10px",
+                }}>
+                <div style={{width: rightPaperInnerWidth}}>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/user" component={User} />
+                  <Route path="/menu" component={SideMenu} />
+                </div>
+              </Paper>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <GPAppBar />
+            <Grid container spacing={2}>
+              <Grid item xs={3}>
+                <Paper className={classes.paper} style={{height: this.getPaperHeight()}}>
+                  <SideMenu />
+                </Paper>
+              </Grid>
+              <Grid item xs={9}>
+                <Paper
+                  className={classes.paper}
+                  style={{
+                    height: this.getPaperHeight(),
+                    paddingRight: "10px",
+                  }}>
+                  <div style={{width: rightPaperInnerWidth}}>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/user" component={User} />
+                  </div>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Fragment>
+        )}
       </div>
     );
   }

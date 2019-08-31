@@ -4,6 +4,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { Provider } from 'react-redux'
 import { ThemeProvider } from '@material-ui/styles';
 import {BrowserRouter as Router} from 'react-router-dom'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 
 import Root from "./components/Root";
 import configureStore from "./store/configureStore";
@@ -21,7 +23,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Router>
-          <Root />
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Root />
+          </MuiPickersUtilsProvider>
         </Router>
       </Provider>
     </ThemeProvider>

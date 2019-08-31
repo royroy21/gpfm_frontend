@@ -27,7 +27,7 @@ class Errors extends React.Component {
     return `${capitalisedFieldAsList.join(" ")}: ${message}`
   }
 
-  formattedErrors(errors) {
+  getFormattedErrors(errors) {
     if (!errors) {
       return null;
     }
@@ -45,7 +45,7 @@ class Errors extends React.Component {
   }
 
   render (){
-    return this.formattedErrors(this.props.error)
+    return this.getFormattedErrors(this.props.error)
   }
 }
 

@@ -2,7 +2,7 @@
 
 export const getFieldError = (error, fieldName) => {
   if (!error) {
-    return false
+    return null
   }
-  return error[fieldName] ? error[fieldName] : false;
+  return error[fieldName] ? error[fieldName] : null;
 };
