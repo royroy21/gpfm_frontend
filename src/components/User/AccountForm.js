@@ -12,6 +12,7 @@ import Form from "../Form";
 import {getFieldError} from "../../utils/form";
 import moment from "moment";
 import {KeyboardDatePicker} from "@material-ui/pickers";
+import MultipleKeywordSelector from "../Form/MultipleKeywordSelector";
 
 const styles = theme => ({
   button: {
@@ -37,6 +38,7 @@ class AccountForm extends Form {
       avatar: '',
       bio: '',
       dob: null,
+      genres: [],
     },
     forceBlankImage: false,
   };
@@ -52,6 +54,7 @@ class AccountForm extends Form {
     const {
       bio,
       dob,
+      genres,
       handle,
     } = this.props.user.object;
     const formData = {
@@ -59,6 +62,7 @@ class AccountForm extends Form {
       avatar: null,
       bio: bio,
       dob: dob ? new moment(dob) : null,
+      genres: genres,
     };
     this.setState({formData});
     this.setState({forceBlankImage: !this.props.user.object.avatar})
@@ -116,7 +120,21 @@ class AccountForm extends Form {
     this.formData.append("dob", date.format("YYYY-MM-DD"));
   };
 
+  handleGenresChange = (genres) => {
+    const newGenres = this.props.genres.objects.filter(genre => genres.includes(genre.name));
+    const formData = {
+      ...this.state.formData,
+      genres: newGenres,
+    };
+    this.setState({formData});
+    this.formData.append("genres", JSON.stringify(newGenres));
+  };
+
   getFields (){
+    const { objects: genres } = this.props.genres;
+    if (!genres) {
+      return null;
+    }
     const { classes } = this.props;
     const handleError = getFieldError(this.props.user.error, "handle");
     const avatarSrc = this.getAvatarSrc();
@@ -167,6 +185,14 @@ class AccountForm extends Form {
             <CloudUploadIcon className={classes.rightIcon} />
           </Button>
         )}
+        <MultipleKeywordSelector
+          handleFormChange={this.handleGenresChange}
+          options={genres}
+          initialSelectedItems={this.props.user.object.genres.map(genre => genre.name)}
+          placeholderHasItems={" ...add more genres"}
+          placeholderNoItems={"Type to add genres"}
+          label={"Your Genres"}
+        />
         <TextField
           error={!!handleError}
           autoFocus
@@ -202,6 +228,7 @@ export default withStyles(styles)(AccountForm)
 
 AccountForm.propTypes = {
   actions: PropTypes.object.isRequired,
+  genres: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
 };
