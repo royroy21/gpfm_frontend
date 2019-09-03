@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 import { withStyles } from '@material-ui/core/styles';
@@ -19,6 +19,8 @@ const styles = theme => ({
     position: 'relative',
   },
   paper: {
+    maxHeight: '225px',
+    overflow: 'scroll',
     position: 'absolute',
     zIndex: 2,
     marginTop: theme.spacing(1),
@@ -38,6 +40,8 @@ const styles = theme => ({
 });
 
 class MultipleKeywordSelector extends React.Component {
+
+  optionsPaperRef = createRef();
 
   state = {
     inputValue: '',
@@ -81,11 +85,20 @@ class MultipleKeywordSelector extends React.Component {
     this.props.handleFormChange(newSelectedItem);
   };
 
+  optionNames = [];
+
+  scrollToHighlightedOption(optionName) {
+    const y = this.optionNames.indexOf(optionName) * 48;
+    this.optionsPaperRef.current.scrollTo(0, y);
+  };
+
   getOptions = (value) => {
     const cleanedValue = value.trim().toLowerCase();
     const sortFunc = (x,y) => x.name.startsWith(cleanedValue) ? -1 : y.name.startsWith(cleanedValue) ? 1 : 0;
-    return this.props.options.filter(
+    const options = this.props.options.filter(
       option => option.name.toLowerCase().includes(cleanedValue)).sort(sortFunc).slice(0, 20);
+    this.optionNames = options.map(option => option.name);
+    return options;
   };
 
   renderInput(inputProps) {
@@ -109,6 +122,10 @@ class MultipleKeywordSelector extends React.Component {
     const { option, index, itemProps, highlightedIndex, selectedItem } = optionsProps;
     const isHighlighted = highlightedIndex === index;
     const isSelected = (selectedItem || '').indexOf(option.name) > -1;
+
+    if (isHighlighted) {
+      this.scrollToHighlightedOption(option.name)
+    }
     return (
       <MenuItem
         {...itemProps}
@@ -175,7 +192,7 @@ class MultipleKeywordSelector extends React.Component {
               })}
 
               {isOpen ? (
-                <Paper className={classes.paper} square>
+                <Paper className={classes.paper} ref={this.optionsPaperRef} square>
                   {this.getOptions(inputValue2).map((option, index) =>
                     this.renderOptions({
                       option,
