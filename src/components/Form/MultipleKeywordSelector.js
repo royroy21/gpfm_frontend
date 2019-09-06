@@ -34,8 +34,7 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   inputInput: {
-    width: 'auto',
-    flexGrow: 1,
+    width: '100%',
   },
 });
 
@@ -144,73 +143,75 @@ class MultipleKeywordSelector extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Downshift
-        id="downshift-multiple"
-        inputValue={this.state.inputValue}
-        onChange={this.handleChange}
-        selectedItem={this.state.selectedItem}
-      >
-        {({
-          getInputProps,
-          getItemProps,
-          getLabelProps,
-          isOpen,
-          inputValue: inputValue2,
-          selectedItem: selectedItem2,
-          highlightedIndex,
-        }) => {
-          const { onBlur, onChange, onFocus, ...inputProps } = getInputProps({
-            onKeyDown: this.handleKeyDown,
-            placeholder: this.state.selectedItem.length ? this.props.placeholderHasItems : this.props.placeholderNoItems,
-          });
+      <div style={{width: "100%"}}>
+        <Downshift
+          id="downshift-multiple"
+          inputValue={this.state.inputValue}
+          onChange={this.handleChange}
+          selectedItem={this.state.selectedItem}
+        >
+          {({
+            getInputProps,
+            getItemProps,
+            getLabelProps,
+            isOpen,
+            inputValue: inputValue2,
+            selectedItem: selectedItem2,
+            highlightedIndex,
+          }) => {
+            const { onBlur, onChange, onFocus, ...inputProps } = getInputProps({
+              onKeyDown: this.handleKeyDown,
+              placeholder: this.state.selectedItem.length ? this.props.placeholderHasItems : this.props.placeholderNoItems,
+            });
 
-          return (
-            <div className={classes.container}>
-              {this.renderInput({
-                fullWidth: true,
-                classes,
-                label: this.props.label,
-                  InputLabelProps: getLabelProps(),
-                InputProps: {
-                  startAdornment: this.state.selectedItem.map(item => (
-                    <Chip
-                      key={item}
-                      tabIndex={-1}
-                      label={item}
-                      className={classes.chip}
-                      onDelete={() => this.handleDelete(item)}
-                    />
-                  )),
-                  onBlur,
-                  onChange: event => {
-                    this.handleInputChange(event);
-                    onChange(event);
+            return (
+              <div className={classes.container}>
+                {this.renderInput({
+                  fullWidth: true,
+                  classes,
+                  label: this.props.label,
+                    InputLabelProps: getLabelProps(),
+                  InputProps: {
+                    startAdornment: this.state.selectedItem.map(item => (
+                      <Chip
+                        key={item}
+                        tabIndex={-1}
+                        label={item}
+                        className={classes.chip}
+                        onDelete={() => this.handleDelete(item)}
+                      />
+                    )),
+                    onBlur,
+                    onChange: event => {
+                      this.handleInputChange(event);
+                      onChange(event);
+                    },
+                    onFocus,
                   },
-                  onFocus,
-                },
-                inputProps,
-              })}
+                  inputProps,
+                })}
 
-              {isOpen ? (
-                <Paper className={classes.paper} ref={this.optionsPaperRef} square>
-                  {this.getOptions(inputValue2).map((option, index) =>
-                    this.renderOptions({
-                      option,
-                      index,
-                      itemProps: getItemProps({
-                        item: option.name,
-                        id: `downshift-multiple-item-${option.id}`,
+                {isOpen ? (
+                  <Paper className={classes.paper} ref={this.optionsPaperRef} square>
+                    {this.getOptions(inputValue2).map((option, index) =>
+                      this.renderOptions({
+                        option,
+                        index,
+                        itemProps: getItemProps({
+                          item: option.name,
+                          id: `downshift-multiple-item-${option.id}`,
+                        }),
+                        highlightedIndex,
+                        selectedItem: selectedItem2,
                       }),
-                      highlightedIndex,
-                      selectedItem: selectedItem2,
-                    }),
-                  )}
-                </Paper>
-              ) : null}
-            </div>
-          );
-        }}
-      </Downshift>
+                    )}
+                  </Paper>
+                ) : null}
+              </div>
+            );
+          }}
+        </Downshift>
+      </div>
     );
   };
 }
