@@ -178,7 +178,7 @@ class MultipleKeywordSelector extends React.Component {
                         tabIndex={-1}
                         label={item}
                         className={classes.chip}
-                        onDelete={() => this.handleDelete(item)}
+                        onDelete={(this.state.selectedItem.length > 1) ? () => this.handleDelete(item): undefined}
                       />
                     )),
                     onBlur,
