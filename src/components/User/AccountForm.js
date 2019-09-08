@@ -127,7 +127,7 @@ class AccountForm extends Form {
       genres: newGenres,
     };
     this.setState({formData});
-    this.formData.append("genres", JSON.stringify(newGenres));
+    newGenres.map(genre => this.formData.append("genres", genre.id));
   };
 
   getFields (){
@@ -135,6 +135,9 @@ class AccountForm extends Form {
     if (!genres) {
       return null;
     }
+    const initialSelectedGenreNames = genres
+      .filter(genre => this.props.user.object.genres.includes(genre.id))
+      .map(genre => genre.name);
     const { classes } = this.props;
     const handleError = getFieldError(this.props.user.error, "handle");
     const avatarSrc = this.getAvatarSrc();
@@ -188,7 +191,7 @@ class AccountForm extends Form {
         <MultipleKeywordSelector
           handleFormChange={this.handleGenresChange}
           options={genres}
-          initialSelectedItems={this.props.user.object.genres.map(genre => genre.name)}
+          initialSelectedItems={initialSelectedGenreNames}
           placeholderHasItems={" ...add more genres"}
           placeholderNoItems={"Type to add genres"}
           label={"Your Genres"}
