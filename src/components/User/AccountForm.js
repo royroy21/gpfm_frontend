@@ -127,6 +127,8 @@ class AccountForm extends Form {
       genres: newGenres,
     };
     this.setState({formData});
+
+    this.formData.delete("genres");
     newGenres.map(genre => this.formData.append("genres", genre.id));
   };
 
