@@ -92,6 +92,7 @@ class GPAppBar extends React.Component {
       this.props.actions.updateToken({"auth_token": authTokenFromLocalStorage});
       this.props.actions.getUser();
     }
+    this.props.actions.getIPAPI();
   }
 
   getLoginButton() {

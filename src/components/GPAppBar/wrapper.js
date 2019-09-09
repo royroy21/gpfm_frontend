@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import { POST_TOKEN_SUCCESS } from "../../store/actions/token";
-import { getUser } from "../../store/actions/user";
+import { POST_TOKEN_SUCCESS } from '../../store/actions/token';
+import { getIPAPI } from '../../store/actions/ipapi';
+import { getUser } from '../../store/actions/user';
 
 const mapStateToProps = (state) => {
   return {
@@ -19,6 +20,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       getUser: () => {
         dispatch(getUser());
+      },
+      getIPAPI: () => {
+        dispatch(getIPAPI());
       },
     }
   }
