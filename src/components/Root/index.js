@@ -20,7 +20,7 @@ const styles = theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     padding: theme.spacing(2),
-    overflowY: "scroll",
+    overflowY: "auto",
     boxShadow: "0 8px 6px -6px black",
   },
 });
