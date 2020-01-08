@@ -26,6 +26,7 @@ const styles = theme => ({
     marginTop: theme.spacing(1),
     left: 0,
     right: 0,
+    overflowX: 'hidden',
   },
   chip: {
     margin: theme.spacing(0.5, 0.25),
