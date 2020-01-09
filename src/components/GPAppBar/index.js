@@ -18,7 +18,9 @@ import Form from "../Form";
 const styles = theme => ({
   appBar: {
     backgroundColor: "#424242",
-    // boxShadow: "none",
+    width: "auto",
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
     boxShadow: "0 8px 6px -6px black",
   },
   loginButton: {
