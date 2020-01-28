@@ -37,7 +37,7 @@ class SideMenu extends React.Component {
     this.props.history.push(loginRoute);
   };
 
-  goToGigs = () => {
+  goToSearchGigs = () => {
     this.props.history.push(gigsSearchRoute);
   };
 
@@ -48,11 +48,11 @@ class SideMenu extends React.Component {
 
     return (
       <MenuList>
-        <MenuItem onClick={this.goToGigs}>
+        <MenuItem onClick={this.goToSearchGigs}>
           <ListItemIcon>
             <LibraryMusicIcon />
           </ListItemIcon>
-          {"Gigs"}
+          {"Search Gigs"}
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
