@@ -10,11 +10,16 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import SideMenuWrapper from "./wrapper";
 import {withRouter} from "react-router-dom";
-import {accountRoute, loginRoute, registerRoute} from "../../settings/internalRoutes";
+import {
+  accountRoute,
+  loginRoute,
+  registerRoute,
+  gigsSearchRoute,
+} from "../../settings/internalRoutes";
 
 class SideMenu extends React.Component {
 
-  account = () => {
+  goToAccount = () => {
     this.props.history.push(accountRoute);
   };
 
@@ -32,6 +37,10 @@ class SideMenu extends React.Component {
     this.props.history.push(loginRoute);
   };
 
+  goToGigs = () => {
+    this.props.history.push(gigsSearchRoute);
+  };
+
   render() {
     const {object: user} = this.props.store.user;
     const isRegistrationPage =
@@ -39,7 +48,7 @@ class SideMenu extends React.Component {
 
     return (
       <MenuList>
-        <MenuItem>
+        <MenuItem onClick={this.goToGigs}>
           <ListItemIcon>
             <LibraryMusicIcon />
           </ListItemIcon>
@@ -53,7 +62,7 @@ class SideMenu extends React.Component {
         </MenuItem>
         {user ? (
           <Fragment>
-            <MenuItem onClick={this.account}>
+            <MenuItem onClick={this.goToAccount}>
               <ListItemIcon>
                 <AccountCircleIcon />
               </ListItemIcon>

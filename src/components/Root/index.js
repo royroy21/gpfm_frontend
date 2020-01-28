@@ -8,6 +8,7 @@ import { Route } from "react-router-dom";
 import GPAppBar from "../GPAppBar";
 import SideMenu from "../SideMenu";
 import User from "../User"
+import Gigs from "../Gigs"
 
 const styles = theme => ({
   root: {
@@ -110,6 +111,7 @@ class Root extends React.Component {
                   <div style={{width: rightPaperInnerWidth}}>
                     <Route path="/" exact component={Home} />
                     <Route path="/user" component={User} />
+                    <Route path="/gigs" component={Gigs} />
                   </div>
                 </Paper>
               </Grid>
