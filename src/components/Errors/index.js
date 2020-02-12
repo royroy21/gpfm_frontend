@@ -21,10 +21,11 @@ class Errors extends React.Component {
       return message
     }
 
-    const fieldAsList = field.split("_");
-    const capitalisedFieldAsList = fieldAsList
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1));
-    return `${capitalisedFieldAsList.join(" ")}: ${message}`
+    // TODO - could rewrite this so only non field errors show
+    // const fieldAsList = field.split("_");
+    // const capitalisedFieldAsList = fieldAsList
+    //   .map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    // return `${capitalisedFieldAsList.join(" ")}: ${message}`
   }
 
   getFormattedErrors(errors) {

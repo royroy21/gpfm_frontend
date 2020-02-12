@@ -4,6 +4,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import PropTypes from "prop-types";
 import Form from "../Form"
+import Field from "../Form/Field";
 
 class LoginForm extends Form {
 
@@ -44,9 +45,10 @@ class LoginForm extends Form {
   getFields (){
     return (
       <Fragment>
-        <TextField
-          error={!!this.props.token.error}
+        <Field
+          Field={TextField}
           autoFocus
+          error={this.props.token.error}
           required
           id="email"
           label="Email"
@@ -55,9 +57,10 @@ class LoginForm extends Form {
           onChange={this.handleChange}
           margin="normal"
         />
-        <TextField
+        <Field
+          Field={TextField}
           type={this.state.showPassword ? "text" : "password"}
-          error={!!this.props.token.error}
+          error={this.props.token.error}
           required
           id="password"
           label="Password"

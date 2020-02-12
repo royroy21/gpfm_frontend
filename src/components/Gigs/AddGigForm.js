@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import MultipleKeywordSelector from "../Form/MultipleKeywordSelector";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import PropTypes from "prop-types";
+import Field from "../Form/Field";
 
 const styles = theme => ({
   startDatePicker: {
@@ -73,9 +74,12 @@ class AddGigForm extends Form {
     if (!genres) {
       return null;
     }
+    // TODO - sort out these fields
     return (
       <Fragment>
-        <TextField
+        <Field
+          Field={TextField}
+          error={{}}
           autoFocus
           // required
           id="title"
@@ -85,7 +89,9 @@ class AddGigForm extends Form {
           onChange={this.handleChange}
           margin="normal"
         />
-        <TextField
+        <Field
+          Field={TextField}
+          error={{}}
           id={"description"}
           label={"Description"}
           name={"description"}

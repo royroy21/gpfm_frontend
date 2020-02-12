@@ -1,10 +1,10 @@
 import React, {Fragment} from 'react';
 import TextField from "@material-ui/core/TextField";
-import {getFieldError} from "../../utils/form";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import PropTypes from "prop-types";
 import Form from "../Form";
+import Field from "../Form/Field";
 
 class RegisterForm extends Form {
 
@@ -52,13 +52,11 @@ class RegisterForm extends Form {
   };
 
   getFields (){
-    const emailError = getFieldError(this.props.register.error, "email");
-    const passwordError = getFieldError(this.props.register.error, "password");
-    const handleError = getFieldError(this.props.register.error, "handle");
     return (
       <Fragment>
-        <TextField
-          error={!!handleError}
+        <Field
+          Field={TextField}
+          error={this.props.register.error}
           autoFocus
           required
           id="handle"
@@ -68,8 +66,9 @@ class RegisterForm extends Form {
           onChange={this.handleChange}
           margin="normal"
         />
-        <TextField
-          error={!!emailError}
+        <Field
+          Field={TextField}
+          error={this.props.register.error}
           autoFocus
           required
           id="email"
@@ -79,9 +78,10 @@ class RegisterForm extends Form {
           onChange={this.handleChange}
           margin="normal"
         />
-        <TextField
+        <Field
+          Field={TextField}
           type={this.state.showPassword ? "text" : "password"}
-          error={!!passwordError}
+          error={this.props.register.error}
           required
           id="password"
           label="Password"
@@ -90,9 +90,10 @@ class RegisterForm extends Form {
           onChange={this.handleChange}
           margin="normal"
         />
-        <TextField
+        <Field
+          Field={TextField}
+          error={this.props.register.error}
           type={this.state.showPassword ? "text" : "password"}
-          error={!!passwordError}
           required
           id="re_password"
           label="Confirm Password"

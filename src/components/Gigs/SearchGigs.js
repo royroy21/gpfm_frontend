@@ -2,7 +2,6 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import {withStyles} from "@material-ui/core";
 import Form from "../Form";
-import FormButton from "../Form/FormButton";
 import SearchIcon from '@material-ui/icons/Search';
 import Button from "@material-ui/core/Button";
 
