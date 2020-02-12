@@ -4,6 +4,7 @@ import {withStyles} from "@material-ui/core";
 import Form from "../Form";
 import FormButton from "../Form/FormButton";
 import SearchIcon from '@material-ui/icons/Search';
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   searchFieldsContainer: {
@@ -11,7 +12,11 @@ const styles = theme => ({
     width: "100%",
   },
   searchField: {
-    width: "40%",
+    width: "60%",
+    margin: `0 ${theme.spacing(1)}px 0 ${theme.spacing(1)}px`,
+  },
+  locationField: {
+    width: "25%",
     margin: `0 ${theme.spacing(1)}px 0 ${theme.spacing(1)}px`,
   },
   searchFieldDivider: {
@@ -21,6 +26,7 @@ const styles = theme => ({
 
 class SearchGigs extends Form {
 
+  // TODO - This should return search location?
   getSearchGigsLocationLabel() {
     return "SE14"
   }
@@ -29,22 +35,22 @@ class SearchGigs extends Form {
     const { classes } = this.props;
     return (
       <div className={classes.searchFieldsContainer}>
+        <Button type="submit">
+          <SearchIcon />
+        </Button>
         <TextField
           className={classes.searchField}
           id={"search-gigs-keywords"}
-          label={"I'm looking for..."}
-          // variant={"outlined"}
+          label={"Search..."}
+          variant={"outlined"}
         />
         <p className={classes.searchFieldDivider}>{"in"}</p>
         <TextField
-          className={classes.searchField}
+          className={classes.locationField}
           id={"search-gigs-location"}
           label={this.getSearchGigsLocationLabel()}
-          // variant={"outlined"}
+          variant={"outlined"}
         />
-        <FormButton type="submit">
-          <SearchIcon />
-        </FormButton>
       </div>
     )
   }

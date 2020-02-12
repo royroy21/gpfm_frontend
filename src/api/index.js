@@ -36,16 +36,19 @@ class DispatchAPI {
     }
   }
 
-  dispatchGet(url, beginAction, successAction, errorAction, extraActions=null) {
+  dispatchGet(url, beginAction, successAction, errorAction, extraActions=null, params={}) {
     return this.dispatchWithoutData(
-      axios.get, url, beginAction, successAction, errorAction, extraActions);
+      axios.get, url, beginAction, successAction, errorAction, extraActions, params);
   }
 
-  dispatchWithoutData(action ,url, beginAction, successAction, errorAction, extraActions=null) {
+  dispatchWithoutData(action ,url, beginAction, successAction, errorAction, extraActions=null, params={}) {
     return (dispatch, getState) => {
       dispatch(beginAction());
-      const headers = this.getAuthorizationHeaders(getState);
-      return action(url, headers)
+      const headersAndParams = {
+        params,
+        ...this.getAuthorizationHeaders(getState),
+      };
+      return action(url, headersAndParams)
         .then(response => this.handleErrors(response, this.successfulStatusCodes))
         .then(response => {
           dispatch(successAction(response.data));

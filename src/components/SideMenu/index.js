@@ -8,6 +8,7 @@ import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import MessageIcon from '@material-ui/icons/Message';
 import SettingsIcon from '@material-ui/icons/Settings';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import QueueIcon from '@material-ui/icons/Queue';
 import SideMenuWrapper from "./wrapper";
 import {withRouter} from "react-router-dom";
 import {
@@ -15,6 +16,7 @@ import {
   loginRoute,
   registerRoute,
   gigsSearchRoute,
+  addGigRoute,
 } from "../../settings/internalRoutes";
 
 class SideMenu extends React.Component {
@@ -41,6 +43,10 @@ class SideMenu extends React.Component {
     this.props.history.push(gigsSearchRoute);
   };
 
+  goToAddGig = () => {
+    this.props.history.push(addGigRoute);
+  };
+
   render() {
     const {object: user} = this.props.store.user;
     const isRegistrationPage =
@@ -53,6 +59,12 @@ class SideMenu extends React.Component {
             <LibraryMusicIcon />
           </ListItemIcon>
           {"Search Gigs"}
+        </MenuItem>
+        <MenuItem onClick={this.goToAddGig}>
+          <ListItemIcon>
+            <QueueIcon />
+          </ListItemIcon>
+          {"Add Gig"}
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
