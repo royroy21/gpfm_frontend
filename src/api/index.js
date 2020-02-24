@@ -21,6 +21,12 @@ class DispatchAPI {
       axios.patch, data, url, beginAction, successAction, errorAction, extraActions);
   }
 
+  dispatchPatchWithId(id, data, url, beginAction, successAction, errorAction, extraActions=null) {
+    const urlWithId = `${url}${id}/`;
+    return this.dispatchWithData(
+      axios.patch, data, urlWithId, beginAction, successAction, errorAction, extraActions);
+  }
+
   dispatchWithData(action, data, url, beginAction, successAction, errorAction, extraActions=null) {
     return (dispatch, getState) => {
       dispatch(beginAction());
@@ -39,6 +45,18 @@ class DispatchAPI {
   dispatchGet(url, beginAction, successAction, errorAction, extraActions=null, params={}) {
     return this.dispatchWithoutData(
       axios.get, url, beginAction, successAction, errorAction, extraActions, params);
+  }
+
+  dispatchGetWithId(id, url, beginAction, successAction, errorAction, extraActions=null, params={}) {
+    const urlWithId = `${url}${id}/`;
+    return this.dispatchWithoutData(
+      axios.get, urlWithId, beginAction, successAction, errorAction, extraActions, params);
+  }
+
+  dispatchDelete(id, url, beginAction, successAction, errorAction, extraActions=null) {
+    const urlWithId = `${url}${id}/`;
+    return this.dispatchWithoutData(
+      axios.delete, urlWithId, beginAction, successAction, errorAction, extraActions);
   }
 
   dispatchWithoutData(action ,url, beginAction, successAction, errorAction, extraActions=null, params={}) {
