@@ -21,11 +21,11 @@ class AddGigForm extends Form {
   state = {
     formData: {
       title: '',
+      venue: '',
       description: '',
       genres: [],
       start_date: null,
       end_date: null,
-      location: null,
 
       // TODO - add pictures upload, music upload and link upload?
       // image: '',
@@ -36,13 +36,8 @@ class AddGigForm extends Form {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { location } = this.props;
-    if (prevProps.location !== this.props.location) {
-      const { formData } = this.state;
-      const newFormData = {
-        ...formData,
-        location,
-      };
-      this.setState({formData: newFormData})
+    if (prevProps.location !== location) {
+      this.formData.append("location", location);
     }
   }
 
@@ -68,50 +63,91 @@ class AddGigForm extends Form {
     newGenres.map(genre => this.formData.append("genres", genre.id));
   };
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.formData.append("user", this.props.user.object.id);
+    this.props.actions.postGig(this.formData);
+  };
+
+  handleStartDateChange = (event) => {
+    const formData = {
+      ...this.state.formData,
+      "start_date": event,
+    };
+    this.setState({formData});
+    this.formData.append("start_date", event.format());
+  };
+
+  handleEndDateChange = (event) => {
+    const formData = {
+      ...this.state.formData,
+      "end_date": event,
+    };
+    this.setState({formData});
+    this.formData.append("end_date", event.format());
+  };
+
   getFields() {
     const { classes } = this.props;
     const { objects: genres } = this.props.genres;
     if (!genres) {
       return null;
     }
-    // TODO - sort out these fields
     return (
       <Fragment>
         <Field
           Field={TextField}
-          error={{}}
+          error={this.props.gig.error}
           autoFocus
-          // required
-          id="title"
-          label="Title"
-          name="title"
-          // value={this.state.formData.handle}
+          required
+          id={"title"}
+          label={"Title"}
+          name={"title"}
+          value={this.state.formData.title}
           onChange={this.handleChange}
-          margin="normal"
+          margin={"normal"}
         />
         <Field
           Field={TextField}
-          error={{}}
+          error={this.props.gig.error}
           id={"description"}
           label={"Description"}
           name={"description"}
-          // value={!!this.state.formData.bio ? this.state.formData.bio : " "}
+          value={!!this.state.formData.description ? this.state.formData.description : " "}
           onChange={this.handleChange}
           multiline
           rows={"4"}
           margin={"normal"}
           variant={"outlined"}
         />
-        <MultipleKeywordSelector
+        <Field
+          Field={MultipleKeywordSelector}
+          error={this.props.gig.error}
+          name={"genres"}
           handleFormChange={this.handleGenresChange}
           options={genres}
-          // initialSelectedItems={initialSelectedGenreNames}
           placeholderHasItems={" ...add more genres"}
           placeholderNoItems={"Type to add genres"}
           label={"Gig Genres"}
         />
+        <Field
+          Field={TextField}
+          error={this.props.gig.error}
+          id={"venue"}
+          label={"Venue"}
+          name={"venue"}
+          placeholder={"eg.. Brixton"}
+          value={this.state.formData.venue}
+          onChange={this.handleChange}
+          margin="normal"
+        />
+        {/*
+          TODO - errors at date fields are not underneath
+        */}
         <div style={{display: "flex"}}>
-          <KeyboardDatePicker
+          <Field
+            Field={KeyboardDatePicker}
+            error={this.props.gig.error}
             className={classes.startDatePicker}
             disableToolbar
             disablePast
@@ -122,9 +158,11 @@ class AddGigForm extends Form {
             name={"start_date"}
             label={"Start Date"}
             value={this.state.formData.start_date}
-            // onChange={this.handleDOBChange}
+            onChange={this.handleStartDateChange}
           />
-          <KeyboardDatePicker
+          <Field
+            Field={KeyboardDatePicker}
+            error={this.props.gig.error}
             className={classes.endDatePicker}
             disableToolbar
             disablePast
@@ -135,7 +173,7 @@ class AddGigForm extends Form {
             name={"end_date"}
             label={"End Date"}
             value={this.state.formData.end_date}
-            // onChange={this.handleDOBChange}
+            onChange={this.handleEndDateChange}
           />
         </div>
       </Fragment>
