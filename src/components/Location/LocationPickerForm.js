@@ -49,7 +49,19 @@ class LocationPickerForm extends Form {
     selectedLocation: null,
   };
 
+  componentDidMount() {
+    const { object: location } = this.props.store.location;
+    if (location) {
+      this.setLocation([location]);
+    }
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const { object: location } = this.props.store.location;
+    if (location) {
+      this.props.updateLocationField(location.id);
+    }
+
     const { objects } = this.props.store.forwardGeocoding;
     if (prevProps.store.forwardGeocoding.loading && objects && objects.length) {
       this.setLocation(objects);
@@ -57,6 +69,7 @@ class LocationPickerForm extends Form {
     if (prevProps.store.forwardGeocoding.loading && (!objects || !objects.length) && prevState.selectedLocation !== null) {
       this.setState({selectedLocation: null});
       this.props.updateLocationField(null);
+      this.props.actions.clearLocation();
     }
   }
 
@@ -87,7 +100,7 @@ class LocationPickerForm extends Form {
         },
         selectedLocation: location,
       }));
-      this.props.updateLocationField(location);
+      this.props.actions.postLocation(location);
     } else {
       this.setState(state => ({
         formData: {
@@ -96,7 +109,7 @@ class LocationPickerForm extends Form {
         },
         selectedLocation: null,
       }));
-      this.props.updateLocationField(null);
+      this.props.actions.clearLocation()
     }
   };
 
