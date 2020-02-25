@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const styles = theme => ({
   large: {
     margin: "10px auto 5px auto",
-    borderRadius: "25px",
+    borderRadius: "10px",
     width: "100%",
   },
   small: {
@@ -35,7 +35,6 @@ class Image extends React.Component {
 export default withStyles(styles)(Image);
 
 Image.propTypes = {
-  // forceBlank: PropTypes.bool.isRequired,
   size: PropTypes.string.isRequired,
   src: PropTypes.string,
 };

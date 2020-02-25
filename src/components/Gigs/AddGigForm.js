@@ -6,6 +6,7 @@ import MultipleKeywordSelector from "../Form/MultipleKeywordSelector";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import PropTypes from "prop-types";
 import Field from "../Form/Field";
+import SingleImageField from "../Form/SingleImageField";
 
 const styles = theme => ({
   startDatePicker: {
@@ -26,12 +27,8 @@ class AddGigForm extends Form {
       genres: [],
       start_date: null,
       end_date: null,
-
-      // TODO - add pictures upload, music upload and link upload?
-      // image: '',
-      // link: '',
+      image: '',
     },
-    // forceBlankImage: false,
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -87,6 +84,23 @@ class AddGigForm extends Form {
     this.formData.append("end_date", event.format());
   };
 
+  handleAddImage = (event) => {
+    const image = event.target.files[0];
+    if (image) {
+      this.handleChangeFile(event, "image");
+    }
+  };
+
+  handleRemoveImage = () => {
+    const formData = {
+      ...this.state.formData,
+      image: null,
+    };
+    this.setState({formData});
+    this.formData.delete("image");
+    this.formData.append("image", "");
+  };
+
   getFields() {
     const { classes } = this.props;
     const { objects: genres } = this.props.genres;
@@ -106,6 +120,12 @@ class AddGigForm extends Form {
           value={this.state.formData.title}
           onChange={this.handleChange}
           margin={"normal"}
+        />
+        <SingleImageField
+          src={this.state.formData.image}
+          handleAddImage={this.handleAddImage}
+          handleRemoveImage={this.handleRemoveImage}
+          error={this.props.gig.error}
         />
         <Field
           Field={TextField}

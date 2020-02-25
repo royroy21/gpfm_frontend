@@ -1,9 +1,11 @@
 import React, {Fragment} from "react";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import ClearIcon from '@material-ui/icons/Clear';
-import SyncIcon from '@material-ui/icons/Sync';
+import {
+  CloudUpload,
+  Clear,
+  Sync,
+} from '@material-ui/icons';
 import {withStyles} from "@material-ui/core";
 import Image from "../SingleImage/Image";
 import PropTypes from "prop-types";
@@ -51,13 +53,13 @@ class SingleImageField extends React.Component {
               style={{width: "100%"}}
               onClick={() => this.imageInput.click()}
             >{"Change"}
-            <SyncIcon className={classes.rightIcon} />
+            <Sync className={classes.rightIcon} />
             </Button>
             <Button
               style={{width: "100%"}}
               onClick={this.props.handleRemoveImage}
             >{"Remove"}
-            <ClearIcon className={classes.rightIcon} />
+            <Clear className={classes.rightIcon} />
             </Button>
           </ButtonGroup>
         ) : (
@@ -65,7 +67,7 @@ class SingleImageField extends React.Component {
             variant={"outlined"}
             onClick={() => this.imageInput.click()}
           >{"Add Image"}
-            <CloudUploadIcon className={classes.rightIcon} />
+            <CloudUpload className={classes.rightIcon} />
           </Button>
         )}
       </Fragment>
