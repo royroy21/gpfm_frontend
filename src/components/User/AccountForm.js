@@ -9,10 +9,10 @@ import GPAvatar from "./UserHandleAvatarDisplay/GPAvatar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import PropTypes from "prop-types";
 import Form from "../Form";
-import {getFieldError} from "../../utils/form";
 import moment from "moment";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import MultipleKeywordSelector from "../Form/MultipleKeywordSelector";
+import Field from "../Form/Field";
 
 const styles = theme => ({
   button: {
@@ -141,12 +141,12 @@ class AccountForm extends Form {
       .filter(genre => this.props.user.object.genres.includes(genre.id))
       .map(genre => genre.name);
     const { classes } = this.props;
-    const handleError = getFieldError(this.props.user.error, "handle");
     const avatarSrc = this.getAvatarSrc();
     return (
       <Fragment>
-        <TextField
-          error={!!handleError}
+        <Field
+          Field={TextField}
+          error={this.props.user.error}
           required
           id="handle"
           label="Handle"
@@ -198,8 +198,8 @@ class AccountForm extends Form {
           placeholderNoItems={"Type to add genres"}
           label={"Your Genres"}
         />
-        <TextField
-          error={!!handleError}
+        <Field
+          Field={TextField}
           autoFocus
           id={"bio"}
           label={"Bio"}

@@ -7,6 +7,8 @@ import FormButton from "../Form/FormButton";
 
 class Form extends React.Component {
 
+  maxWidth = "500px";
+
   state = {
     formData: {
     },
@@ -40,15 +42,23 @@ class Form extends React.Component {
     throw Error("getFields method not implemented");
   }
 
-  render (){
+  render(){
+    const maxWidth = this.props.withMaxWidthLimit ? this.maxWidth: undefined;
+
     return (
-      <Fragment>
-        <form onSubmit={this.handleSubmit}>
+      <div style={{"maxWidth": maxWidth}}>
+        <form onSubmit={this.handleSubmit} autoComplete={"off"}>
           <FormGroup>
-            {this.getFields()}
-            <FormButton type="submit">
-              {this.props.buttonLabel}
-            </FormButton>
+            {this.props.withButton ? (
+              <Fragment>
+                {this.getFields()}
+                <FormButton type="submit">
+                  {this.props.buttonLabel}
+                </FormButton>
+              </Fragment>
+            ) : (
+              this.getFields()
+            )}
             <Errors error={this.props.errors}/>
             <LoadingModal
               loading={!!this.props.loading}
@@ -58,17 +68,24 @@ class Form extends React.Component {
             />
           </FormGroup>
         </form>
-      </Fragment>
+      </div>
     )
   }
 }
 
 export default Form;
 
+Form.defaultProps = {
+  withButton: true,
+  withMaxWidthLimit: false,
+};
+
 Form.propTypes = {
   error: PropTypes.bool.isRequired,
   errors: PropTypes.object,
   loading: PropTypes.bool.isRequired,
   successMessage: PropTypes.string.isRequired,
-  buttonLabel: PropTypes.string.isRequired,
+  buttonLabel: PropTypes.string,
+  withButton: PropTypes.bool.isRequired,
+  withMaxWidthLimit: PropTypes.bool.isRequired,
 };

@@ -8,6 +8,7 @@ import { Route } from "react-router-dom";
 import GPAppBar from "../GPAppBar";
 import SideMenu from "../SideMenu";
 import User from "../User"
+import Gigs from "../Gigs"
 
 const styles = theme => ({
   root: {
@@ -67,9 +68,18 @@ class Root extends React.Component {
     return `${paperHeight}px`;
   };
 
+  getDefaultRoutes() {
+    return (
+      <Fragment>
+        <Route path="/" exact component={Home} />
+        <Route path="/user" component={User} />
+        <Route path="/gigs" component={Gigs} />
+      </Fragment>
+    )
+  };
+
   render() {
     const isMobile = this.state.screenWidth < 900;
-    const rightPaperInnerWidth = isMobile ? "99%": "35%";
     const { classes } = this.props;
     return (
       <div className={classes.root} style={{height: this.getScreenHeight()}}>
@@ -84,11 +94,10 @@ class Root extends React.Component {
                   height: this.getPaperHeight(),
                   paddingRight: "10px",
                 }}>
-                <div style={{width: rightPaperInnerWidth}}>
-                  <Route path="/" exact component={Home} />
-                  <Route path="/user" component={User} />
+                <Fragment>
+                  {this.getDefaultRoutes()}
                   <Route path="/menu" component={SideMenu} />
-                </div>
+                </Fragment>
               </Paper>
           </Fragment>
         ) : (
@@ -107,10 +116,7 @@ class Root extends React.Component {
                     height: this.getPaperHeight(),
                     paddingRight: "10px",
                   }}>
-                  <div style={{width: rightPaperInnerWidth}}>
-                    <Route path="/" exact component={Home} />
-                    <Route path="/user" component={User} />
-                  </div>
+                  {this.getDefaultRoutes()}
                 </Paper>
               </Grid>
             </Grid>

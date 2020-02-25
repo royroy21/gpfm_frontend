@@ -28,6 +28,7 @@ class User extends React.Component {
               loading={!!this.props.store.token.loading || !!this.props.store.user.loading}
               successMessage={"Logged In"}
               buttonLabel={"Login"}
+              withMaxWidthLimit={true}
             />
           }
         />
@@ -56,6 +57,7 @@ class User extends React.Component {
               }
               successMessage={"Registered"}
               buttonLabel={"Register"}
+              withMaxWidthLimit={true}
             />
           }
         />{
@@ -76,6 +78,7 @@ class User extends React.Component {
                 loading={!!this.props.store.user.loading}
                 successMessage={"Updated User"}
                 buttonLabel={"Update User"}
+                withMaxWidthLimit={true}
               />
             }
           />
