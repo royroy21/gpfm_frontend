@@ -62,7 +62,7 @@ export const gigReducer = (state = initialGigState, action) => {
 };
 
 const initialGigsState = {
-  object: null,
+  objects: null,
   loading: false,
   error: null,
 };
@@ -73,15 +73,18 @@ export const gigsReducer = (state = initialGigsState, action) => {
       return {
         ...state,
         loading: true,
+        error: null,
       };
     case GET_GIGS_SUCCESS:
       return {
-        ...state,
-        object: action.payload.data,
+        objects: action.payload.data,
+        loading: false,
+        error: null,
       };
     case GET_GIGS_ERROR:
       return {
         ...state,
+        loading: false,
         error: action.payload.error,
       };
     default:
