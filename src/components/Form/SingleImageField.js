@@ -78,7 +78,7 @@ class SingleImageField extends React.Component {
 export default withStyles(styles)(SingleImageField);
 
 SingleImageField.propTypes = {
-  src: PropTypes.string,
+  src: PropTypes.object,
   error: PropTypes.object,
   handleAddImage: PropTypes.func.isRequired,
   handleRemoveImage: PropTypes.func.isRequired,

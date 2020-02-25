@@ -27,7 +27,7 @@ class AddGigForm extends Form {
       genres: [],
       start_date: null,
       end_date: null,
-      image: '',
+      image: null,
     },
   };
 

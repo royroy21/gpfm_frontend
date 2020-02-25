@@ -1,14 +1,6 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core";
 import Error from "./Error";
-
-const styles = theme => ({
-  error: {
-    fontSize: "0.9em",
-    color: theme.palette.secondary.main,
-  }
-});
 
 class Field extends React.Component {
 
@@ -28,8 +20,11 @@ class Field extends React.Component {
 }
 
 Field.propTypes = {
-  field: PropTypes.node.isRequired,
-  error: PropTypes.object.isRequired,
+  Field: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.func,
+  ]),
+  error: PropTypes.object,
 };
 
-export default withStyles(styles)(Field);
+export default Field;

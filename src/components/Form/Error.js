@@ -31,7 +31,7 @@ class Error extends React.Component {
 
 Error.propTypes = {
   name: PropTypes.string.isRequired,
-  error: PropTypes.object.isRequired,
+  error: PropTypes.object,
 };
 
 export default withStyles(styles)(Error);
