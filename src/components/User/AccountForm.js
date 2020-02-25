@@ -13,6 +13,7 @@ import moment from "moment";
 import {KeyboardDatePicker} from "@material-ui/pickers";
 import MultipleKeywordSelector from "../Form/MultipleKeywordSelector";
 import Field from "../Form/Field";
+import Error from "../Form/Error";
 
 const styles = theme => ({
   button: {
@@ -159,6 +160,10 @@ class AccountForm extends Form {
           forceBlank={this.state.forceBlankImage}
           size={"large"}
           src={avatarSrc}
+        />
+        <Error
+          name={"avatar"}
+          error={this.props.user.error}
         />
         <br />
         <input
