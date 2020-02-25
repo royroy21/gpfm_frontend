@@ -1,6 +1,7 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
+import Error from "./Error";
 
 const styles = theme => ({
   error: {
@@ -11,23 +12,15 @@ const styles = theme => ({
 
 class Field extends React.Component {
 
-  renderError() {
-    const { classes, error, name } = this.props;
-
-    if (!error) {
-      return null
-    }
-    const errors = error[name] || [];
-    return errors.map((errorMessage, index) =>
-      <p key={index} className={classes.error}>{errorMessage}</p>)
-  }
-
   render (){
     const { Field, error, ...rest } = this.props;
     return (
       <Fragment>
         <Field {...rest} />
-        {this.renderError()}
+        <Error
+          name={this.props.name}
+          error={error}
+        />
       </Fragment>
     )
   }
