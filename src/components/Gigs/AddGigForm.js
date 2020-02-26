@@ -204,5 +204,5 @@ class AddGigForm extends Form {
 export default withStyles(styles)(AddGigForm);
 
 AddGigForm.propTypes = {
-  location: PropTypes.object,
+  location: PropTypes.number,
 };
