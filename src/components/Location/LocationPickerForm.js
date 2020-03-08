@@ -1,4 +1,4 @@
-import React, {createRef} from "react";
+import React, {createRef, Fragment} from "react";
 import TextField from "@material-ui/core/TextField";
 import {withStyles} from "@material-ui/core";
 import ForwardGeocodingWrapper from "./wrapper";
@@ -7,12 +7,13 @@ import Form from "../Form";
 import Paper from "@material-ui/core/Paper";
 import Downshift from "downshift";
 import MenuItem from "@material-ui/core/MenuItem";
-
-// TODO -
-// add button for start get location logic
-// add indication to user if location is selected or not
-// add country dropdown
-// (nice to have) add autocomplete from locations api
+import Button from "@material-ui/core/Button";
+import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
+import WarningRoundedIcon from '@material-ui/icons/WarningRounded';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import Tooltip from "@material-ui/core/Tooltip";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
 
 const styles = theme => ({
   container: {
@@ -21,8 +22,36 @@ const styles = theme => ({
     flexGrow: 1,
     position: 'relative',
   },
+  error: {
+    color: theme.palette.secondary.main,
+  },
+  formControl: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+    minWidth: "60px",
+  },
+  inputsContainer: {
+    display: "flex",
+  },
   searchField: {
+    position: 'relative',
     width: "100%",
+  },
+  searchButton: {
+    marginRight: theme.spacing(1),
+  },
+  locationSuccessIndicator: {
+    right: 0,
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(11),
+    position: 'absolute',
+  },
+  locationErrorIndicator: {
+    right: 0,
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(11),
+    position: 'absolute',
+    color: "yellow",
   },
   multipleLocationsContainer: {
     position: 'relative',
@@ -32,10 +61,6 @@ const styles = theme => ({
     zIndex: 2,
     left: 0,
     right: 0,
-  },
-  multipleLocationsList: {
-    maxHeight: "300px",
-    overflowY: "scroll",
   },
   noLocationsFoundError: {
     color: theme.palette.secondary.main,
@@ -57,23 +82,31 @@ class LocationPickerForm extends Form {
   optionsPaperRef = createRef();
 
   DEFAULT_LABEL = "Gig Location";
+  MISSING_LOCATION_MESSAGE = "No location selected";
+  LOCATION_PLACEHOLDER = "London";
 
   state = {
     formData: {
       q: "",
 
       // TODO - hard coded :/
-      country: "gb",
+      country: "GB",
     },
     selectedLocation: null,
     menuIsOpen: false,
   };
 
   componentDidMount() {
+    const { objects: countries } = this.props.store.countries;
+    if (!countries) {
+      this.props.actions.getCountries();
+    }
+
     const { object: location } = this.props.store.location;
     if (location) {
       this.setLocation([location]);
     }
+
     document.addEventListener("keydown", this.escFunction, false);
   }
 
@@ -122,9 +155,23 @@ class LocationPickerForm extends Form {
     const { formData } = this.state;
     const newFormData = {
       ...formData,
-      "q": event.target.value,
+      q: event.target.value,
     };
     this.setState({formData: newFormData})
+  };
+
+  handleCountryChange = (event) => {
+    const { formData } = this.state;
+    const newFormData = {
+      ...formData,
+      q: "",
+      country: event.target.value,
+    };
+    this.setState({
+      ...this.state,
+      formData: newFormData,
+      selectedLocation: null,
+    })
   };
 
   setLocation = (locations) => {
@@ -201,55 +248,108 @@ class LocationPickerForm extends Form {
     }
   };
 
+  renderCountryValue = (value) => {
+    return value
+  };
+
   getFields() {
+    const { objects: countries } = this.props.store.countries;
+    if (!countries) {
+      return null;
+    }
     const { classes } = this.props;
     const { objects: locations } = this.props.store.forwardGeocoding;
     return (
-      <Downshift
-        onChange={location => this.setLocation([location])}
-        itemToString={item => (item ? item.name : '')}
-        isOpen={this.state.menuIsOpen}
-        onOuterClick={this.onOuterClick}
-      >
-        {({
-          getInputProps,
-          getItemProps,
-          isOpen,
-          highlightedIndex,
-          selectedItem,
-        }) => (
-          <div className={classes.container}>
-            <TextField
-              {...getInputProps()}
-              className={classes.searchField}
-              id={"get-location"}
-              label={this.DEFAULT_LABEL}
-              variant={"outlined"}
-              onChange={this.handleChange}
-              value={this.state.formData.q}
-            />
-            {isOpen ? (
-              <Paper
-                className={classes.paper}
-                ref={this.optionsPaperRef}
-                square
-              >
-                {(locations || []).map((option, index) =>
-                  this.renderOptions({
-                    option,
-                    index,
-                    itemProps: getItemProps({
-                      item: option,
-                      id: `downshift-multiple-item-${option.name}`,
-                    }),
-                    highlightedIndex,
-                    selectedItem,
-                  }),
+      <Fragment>
+        <Downshift
+          onChange={location => this.setLocation([location])}
+          itemToString={item => (item ? item.name : '')}
+          isOpen={this.state.menuIsOpen}
+          onOuterClick={this.onOuterClick}
+        >
+          {({
+            getInputProps,
+            getItemProps,
+            isOpen,
+            highlightedIndex,
+            selectedItem,
+          }) => (
+            <div className={classes.container}>
+              <div className={classes.inputsContainer}>
+                <Button
+                  className={classes.searchButton}
+                  variant={"contained"}
+                  type={"submit"}
+                  color={"secondary"}
+                >
+                  <LocationSearchingIcon />
+                </Button>
+                <TextField
+                  {...getInputProps()}
+                  className={classes.searchField}
+                  id={"get-location"}
+                  label={this.DEFAULT_LABEL}
+                  variant={"outlined"}
+                  onChange={this.handleChange}
+                  value={this.state.formData.q}
+                  placeholder={this.LOCATION_PLACEHOLDER}
+                />
+                {this.state.selectedLocation ? (
+                  <ThumbUpIcon
+                    className={classes.locationSuccessIndicator}
+                  />
+                ) : (
+                  <Tooltip title={this.MISSING_LOCATION_MESSAGE}>
+                    <WarningRoundedIcon
+                      className={classes.locationErrorIndicator}
+                    />
+                  </Tooltip>
                 )}
-              </Paper>): null}
-          </div>
-        )}
-      </Downshift>
+                <FormControl variant="outlined" className={classes.formControl}>
+                  <Select
+                    renderValue={this.renderCountryValue}
+                    id="select-country"
+                    value={this.state.formData.country}
+                    onChange={this.handleCountryChange}
+                    MenuProps={{style: {maxHeight: '500px'}}}
+                  >
+                  {countries.map(country => (
+                    <MenuItem
+                      key={country.code}
+                      value={country.code}
+                    >
+                      {`${country.name} (${country.code})`}
+                    </MenuItem>
+                  ))}
+                  </Select>
+                </FormControl>
+              </div>
+              {isOpen ? (
+                <Paper
+                  className={classes.paper}
+                  ref={this.optionsPaperRef}
+                  square
+                >
+                  {(locations || []).map((option, index) =>
+                    this.renderOptions({
+                      option,
+                      index,
+                      itemProps: getItemProps({
+                        item: option,
+                        id: `downshift-multiple-item-${option.name}`,
+                      }),
+                      highlightedIndex,
+                      selectedItem,
+                    }),
+                  )}
+                </Paper>): null}
+            </div>
+          )}
+        </Downshift>
+        {this.props.extraErrors.length ? (
+          this.props.extraErrors.map(error => <p className={classes.error}>{error}</p>)
+        ) : null}
+      </Fragment>
     )
   }
 }
@@ -258,8 +358,10 @@ export default withStyles(styles)(ForwardGeocodingWrapper(LocationPickerForm));
 
 LocationPickerForm.defaultProps = {
   withButton: false,
+  extraErrors: [],
 };
 
 LocationPickerForm.propTypes = {
   updateLocationField: PropTypes.func.isRequired,
+  extraErrors: PropTypes.array,
 };
