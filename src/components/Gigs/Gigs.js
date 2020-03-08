@@ -36,6 +36,11 @@ class Gigs extends Component {
           key={`added-gigs-item-${gig.id}`}
           gig={gig}
           genres={genres}
+          deleteGigProps={{
+            actions: {
+              deleteGig: this.props.deleteGig,
+            },
+          }}
         />)}
       </Fragment>
     )

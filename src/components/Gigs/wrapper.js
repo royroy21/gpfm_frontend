@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import {getGenres} from "../../store/actions/genres";
-import {CLEAR_GIG, getGigs, postGig} from "../../store/actions/gigs";
+import {CLEAR_GIG, getGigs, deleteGig, postGig} from "../../store/actions/gigs";
 
 const mapStateToProps = (state) => {
   return {
@@ -27,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       clearGig: () => {
         dispatch({type: CLEAR_GIG});
+      },
+      deleteGig: (id) => {
+        dispatch(deleteGig(id))
       },
     }
   }
