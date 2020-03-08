@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import {getCountries} from "../../store/actions/countries";
 import {CLEAR_LOCATION, postLocation} from "../../store/actions/location";
 
 import {
@@ -9,6 +10,7 @@ import {
 const mapStateToProps = (state) => {
   return {
     store: {
+      countries: state.countries,
       forwardGeocoding: state.forwardGeocoding,
       location: state.location,
     },
@@ -20,6 +22,9 @@ const mapDispatchToProps = (dispatch) => {
     actions: {
       clearForwardGeocoding: () => {
         dispatch({type: CLEAR_FORWARD_GEOCODING});
+      },
+      getCountries: () => {
+        dispatch(getCountries())
       },
       getForwardGeocoding: (params) => {
         dispatch(getForwardGeocoding(params))
