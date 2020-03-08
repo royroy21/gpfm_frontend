@@ -14,12 +14,16 @@ class AddGig extends React.Component {
   };
 
   render() {
+    const errors = this.props.addGigFormProps.errors
+      ? this.props.addGigFormProps.errors : {};
+    const locationErrors =  errors.location;
     return (
       <Fragment>
         <LocationPickerForm
           successMessage={""}
           updateLocationField={this.getLocationField}
           withMaxWidthLimit={true}
+          extraErrors={locationErrors}
         />
         <AddGigForm
           {...this.props.addGigFormProps}
