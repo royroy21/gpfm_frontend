@@ -6,6 +6,9 @@ import SuccessNotification from "./SuccessNotification";
 
 class LoadingModal extends React.Component {
 
+  LONG_TIMEOUT = 1495;
+  SHORT_TIMEOUT = 300;
+
   state = {
     open: false,
     success: false,
@@ -20,11 +23,17 @@ class LoadingModal extends React.Component {
     }
     if (!prevProps.loading && this.props.loading) {
      this.setState({open: true})
-    } else if (prevProps.loading && !this.props.loading && !this.props.error) {
-      setTimeout(() => this.setState({open: false}), 1495)
-    } else if (prevProps.loading && !this.props.loading && this.props.error) {
-      this.setState({open: false})
+    } else if (prevProps.loading && !this.props.loading) {
+      if (this.props.successMessage && !this.props.error) {
+        this.setStateWithTimeout({open: false}, this.LONG_TIMEOUT)
+      } else {
+        this.setStateWithTimeout({open: false}, this.SHORT_TIMEOUT)
+      }
     }
+  }
+
+  setStateWithTimeout(newState, timeout) {
+    setTimeout(() => this.setState(newState), timeout)
   }
 
   render() {
@@ -47,7 +56,7 @@ LoadingModal.propTypes = {
   loading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
   withSuccess: PropTypes.bool.isRequired,
-  successMessage: PropTypes.string.isRequired,
+  successMessage: PropTypes.string,
 };
 
 LoadingModal.defaultProps = {

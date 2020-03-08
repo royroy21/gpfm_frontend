@@ -1,9 +1,10 @@
 import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
-import {addGigRoute, gigsSearchRoute} from "../../settings/internalRoutes";
+import {addedGigsRoute, addGigRoute, gigsSearchRoute} from "../../settings/internalRoutes";
 import GigsWrapper from "./wrapper";
 import SearchGigs from "./SearchGigs";
 import AddGig from "./AddGig";
+import AddedGigs from "./AddedGigs";
 
 
 class Gigs extends React.Component {
@@ -21,6 +22,19 @@ class Gigs extends React.Component {
           }
         />
         <Route
+          extact path={addedGigsRoute}
+          render={() =>
+            <AddedGigs
+                actions={{
+                  getGigs: this.props.actions.getGigs,
+                  getGenres: this.props.actions.getGenres,
+                }}
+                genres={this.props.store.genres}
+                gigs={this.props.store.gigs}
+            />
+          }
+        />
+        <Route
           extact path={addGigRoute}
           render={() =>
             <AddGig
@@ -28,6 +42,7 @@ class Gigs extends React.Component {
                 actions: {
                   getGenres: this.props.actions.getGenres,
                   postGig: this.props.actions.postGig,
+                  clearGig: this.props.actions.clearGig,
                 },
                 history: this.props.history,
                 genres: this.props.store.genres,

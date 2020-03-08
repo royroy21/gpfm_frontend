@@ -133,9 +133,7 @@ class GPAppBar extends React.Component {
             <Link to="/menu">
               <ViewHeadlineIcon fontSize={"large"} className={classes.menuIcon}/>
             </Link>
-          ) : (
-            null
-          )}
+          ) : null}
           <Typography className={classes.title} variant="h6" noWrap>
             <Link to="/" className={classes.titleLink}>{"GigPig"}</Link>
           </Typography>

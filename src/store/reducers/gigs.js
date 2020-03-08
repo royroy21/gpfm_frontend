@@ -1,4 +1,5 @@
 import {
+  CLEAR_GIG,
   GET_GIG_BEGIN,
   GET_GIG_SUCCESS,
   GET_GIG_ERROR,
@@ -51,6 +52,7 @@ export const gigReducer = (state = initialGigState, action) => {
         error: action.payload.error,
       };
     case DELETE_GIG_SUCCESS:
+    case CLEAR_GIG:
       return {
         object: null,
         loading: false,

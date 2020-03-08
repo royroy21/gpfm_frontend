@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 
+import countriesReducer from './countries';
 import forwardGeocodingReducer from './forwardGeocoding';
 import {gigReducer, gigsReducer} from './gigs';
 import genresReducer from './genres';
@@ -10,6 +11,7 @@ import tokenReducer from './token'
 import userReducer from './user';
 
 export default combineReducers({
+  countries: countriesReducer,
   forwardGeocoding: forwardGeocodingReducer,
   gig: gigReducer,
   gigs: gigsReducer,

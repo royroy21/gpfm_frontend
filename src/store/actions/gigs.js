@@ -1,6 +1,8 @@
 import {gigsURL} from "../../api/urls";
 import DispatchAPI from "../../api";
 
+export const CLEAR_GIG = 'CLEAR_GIG';
+
 // get gig
 export const GET_GIG_BEGIN = 'GET_GIG_BEGIN';
 export const GET_GIG_SUCCESS = 'GET_GIG_SUCCESS';
@@ -121,9 +123,11 @@ export const getGigsError = error => ({
   payload: { error },
 });
 
-export const getGigs = () => new DispatchAPI().dispatchGet(
+export const getGigs = (params) => new DispatchAPI().dispatchGet(
   gigsURL,
   getGigsBegin,
   getGigsSuccess,
   getGigsError,
+  null,
+  params,
 );

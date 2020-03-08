@@ -1,14 +1,13 @@
-import React, {Fragment} from 'react';
-
+import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
-import MessageIcon from '@material-ui/icons/Message';
-import SettingsIcon from '@material-ui/icons/Settings';
+import FaceIcon from '@material-ui/icons/Face';
+import AddIcon from '@material-ui/icons/Add';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import SearchIcon from '@material-ui/icons/Search';
+import PlaylistAddCheckIcon from '@material-ui/icons/PlaylistAddCheck';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
-import QueueIcon from '@material-ui/icons/Queue';
 import SideMenuWrapper from "./wrapper";
 import {withRouter} from "react-router-dom";
 import {
@@ -17,13 +16,10 @@ import {
   registerRoute,
   gigsSearchRoute,
   addGigRoute,
+  addedGigsRoute,
 } from "../../settings/internalRoutes";
 
 class SideMenu extends React.Component {
-
-  goToAccount = () => {
-    this.props.history.push(accountRoute);
-  };
 
   register = () => {
     this.props.history.push(registerRoute);
@@ -39,70 +35,94 @@ class SideMenu extends React.Component {
     this.props.history.push(loginRoute);
   };
 
-  goToSearchGigs = () => {
-    this.props.history.push(gigsSearchRoute);
-  };
+  menuEntries = [
+    {
+      key: "menu-search",
+      name: "Search",
+      icon: <SearchIcon />,
+      onClick: () => this.props.history.push(gigsSearchRoute),
+      auth: false,
+    },
+    {
+      key: "menu-add",
+      name: "Add",
+      icon: <AddIcon />,
+      onClick: () => this.props.history.push(addGigRoute),
+      auth: true,
+    },
+    {
+      key: "menu-added",
+      name: "Added",
+      icon: <PlaylistAddCheckIcon />,
+      onClick: () => this.props.history.push(addedGigsRoute),
+      auth: true,
+    },
+    {
+      key: "menu-messages",
+      name: "Messages",
+      icon: <ChatBubbleOutlineIcon />,
+      onClick: () => {},
+      auth: true,
+    },
+    {
+      key: "menu-account",
+      name: "My Account",
+      icon: <FaceIcon />,
+      onClick: () => this.props.history.push(accountRoute),
+      auth: true,
+    },
+    {
+      key: "menu-out",
+      name: "Log out",
+      icon: <KeyboardReturnIcon />,
+      onClick: this.logout,
+      auth: true,
+    },
+  ];
 
-  goToAddGig = () => {
-    this.props.history.push(addGigRoute);
-  };
+  renderItem(entry) {
+    return (
+      <MenuItem
+        key={entry.key}
+        onClick={entry.onClick}
+      >
+        <ListItemIcon>
+          {entry.icon}
+        </ListItemIcon>
+        {entry.name}
+      </MenuItem>
+    )
+  }
 
   render() {
     const {object: user} = this.props.store.user;
     const isRegistrationPage =
       this.props.history.location.pathname === registerRoute;
-
     return (
       <MenuList>
-        <MenuItem onClick={this.goToSearchGigs}>
-          <ListItemIcon>
-            <LibraryMusicIcon />
-          </ListItemIcon>
-          {"Search Gigs"}
-        </MenuItem>
-        <MenuItem onClick={this.goToAddGig}>
-          <ListItemIcon>
-            <QueueIcon />
-          </ListItemIcon>
-          {"Add Gig"}
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <MessageIcon />
-          </ListItemIcon>
-          {"Messages"}
-        </MenuItem>
-        {user ? (
-          <Fragment>
-            <MenuItem onClick={this.goToAccount}>
-              <ListItemIcon>
-                <AccountCircleIcon />
-              </ListItemIcon>
-              {"My Account"}
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              {"Settings"}
-            </MenuItem>
-            <MenuItem onClick={this.logout}>
-              <ListItemIcon>
-                <KeyboardReturnIcon />
-              </ListItemIcon>
-              {"Logout"}
-            </MenuItem>
-          </Fragment>
-        ) : (
-          <MenuItem onClick={isRegistrationPage ? this.login : this.register}>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            {isRegistrationPage ? "Login" : "Register User"}
-          </MenuItem>
-        )}
+        {this.menuEntries.map(entry => {
+          if (entry.auth) {
+            if (user) {
+              return (
+                this.renderItem(entry)
+              )
+            } return null;
+          } else {
+            return (
+              this.renderItem(entry)
+            )
+          }
+        })}
+        {!user ? (
+          this.renderItem({
+            key: "menu-register",
+            name: isRegistrationPage ? "Login" : "Register User",
+            onClick: isRegistrationPage ? this.login : this.register,
+            icon: <FaceIcon />,
+          })
+        ) : null}
       </MenuList>
-    )
+    );
   }
 }
 

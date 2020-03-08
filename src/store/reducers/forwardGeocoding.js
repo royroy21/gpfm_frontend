@@ -1,4 +1,5 @@
 import {
+  CLEAR_FORWARD_GEOCODING,
   GET_FORWARD_GEOCODING_BEGIN,
   GET_FORWARD_GEOCODING_SUCCESS,
   GET_FORWARD_GEOCODING_ERROR,
@@ -29,6 +30,12 @@ const forwardGeocodingReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.payload.error,
+      };
+    case CLEAR_FORWARD_GEOCODING:
+      return {
+        objects: null,
+        loading: false,
+        error: null,
       };
     default:
       return state
