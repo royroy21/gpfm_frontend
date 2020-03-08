@@ -115,6 +115,7 @@ class SideMenu extends React.Component {
         })}
         {!user ? (
           this.renderItem({
+            key: "menu-register",
             name: isRegistrationPage ? "Login" : "Register User",
             onClick: isRegistrationPage ? this.login : this.register,
             icon: <FaceIcon />,
