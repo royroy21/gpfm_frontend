@@ -7,6 +7,7 @@ import {KeyboardDatePicker} from "@material-ui/pickers";
 import PropTypes from "prop-types";
 import Field from "../Form/Field";
 import SingleImageField from "../Form/SingleImageField";
+import {addedGigsRoute} from "../../settings/internalRoutes";
 
 const styles = theme => ({
   startDatePicker: {
@@ -18,6 +19,8 @@ const styles = theme => ({
 });
 
 class AddGigForm extends Form {
+
+  VENUE_PLACEHOLDER = "Brixton Academy";
 
   state = {
     formData: {
@@ -36,10 +39,16 @@ class AddGigForm extends Form {
     if (prevProps.location !== location) {
       this.formData.append("location", location);
     }
+
+    const { gig } = this.props;
+    if (gig.object) {
+      setTimeout(() => this.props.history.push(addedGigsRoute), 1500);
+    }
   }
 
   componentDidMount() {
     this.getGenres();
+    this.props.actions.clearGig();
   };
 
   getGenres() {
@@ -156,7 +165,7 @@ class AddGigForm extends Form {
           id={"venue"}
           label={"Venue"}
           name={"venue"}
-          placeholder={"eg.. Brixton"}
+          placeholder={this.VENUE_PLACEHOLDER}
           value={this.state.formData.venue}
           onChange={this.handleChange}
           margin="normal"
