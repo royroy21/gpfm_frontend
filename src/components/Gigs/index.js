@@ -25,12 +25,12 @@ class Gigs extends React.Component {
           extact path={addedGigsRoute}
           render={() =>
             <AddedGigs
-                actions={{
-                  getGigs: this.props.actions.getGigs,
-                  getGenres: this.props.actions.getGenres,
-                }}
-                genres={this.props.store.genres}
-                gigs={this.props.store.gigs}
+              actions={{
+                getGigs: this.props.actions.getGigs,
+                getGenres: this.props.actions.getGenres,
+              }}
+              genres={this.props.store.genres}
+              gigs={this.props.store.gigs}
             />
           }
         />
