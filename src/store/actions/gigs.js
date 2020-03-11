@@ -68,12 +68,13 @@ export const deleteGigError = error => ({
   payload: { error },
 });
 
-export const deleteGig = ({id}) => new DispatchAPI().dispatchDelete(
+export const deleteGig = (id) => new DispatchAPI().dispatchDelete(
   id,
   gigsURL,
   deleteGigBegin,
   deleteGigSuccess,
   deleteGigError,
+  [() => getGigs({added:true})],
 );
 
 // patch gig

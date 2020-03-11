@@ -37,9 +37,11 @@ class Gigs extends Component {
           gig={gig}
           genres={genres}
           deleteGigProps={{
+            id: gig.id,
             actions: {
-              deleteGig: this.props.deleteGig,
+              deleteGig: this.props.actions.deleteGig,
             },
+            withButton: false,
           }}
         />)}
       </Fragment>

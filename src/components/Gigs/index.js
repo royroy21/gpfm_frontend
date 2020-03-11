@@ -26,6 +26,7 @@ class Gigs extends React.Component {
           render={() =>
             <AddedGigs
               actions={{
+                deleteGig: this.props.actions.deleteGig,
                 getGigs: this.props.actions.getGigs,
                 getGenres: this.props.actions.getGenres,
               }}

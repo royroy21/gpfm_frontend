@@ -1,7 +1,12 @@
 import axios from "axios";
 
 class DispatchAPI {
-  successfulStatusCodes = [200, 201];
+
+  successfulStatusCodes = [
+    200,
+    201,
+    204,
+  ];
 
   constructor() {
     this.dispatchPost = this.dispatchPost.bind(this);
@@ -11,23 +16,74 @@ class DispatchAPI {
     this.handleErrors = this.handleErrors.bind(this);
   }
 
-  dispatchPost(data, url, beginAction, successAction, errorAction, extraActions=null) {
+  dispatchPost(
+    data,
+    url,
+    beginAction,
+    successAction,
+    errorAction,
+    extraActions=null,
+    ) {
     return this.dispatchWithData(
-      axios.post, data, url, beginAction, successAction, errorAction, extraActions);
+      axios.post,
+      data,
+      url,
+      beginAction,
+      successAction,
+      errorAction,
+      extraActions,
+    );
   }
 
-  dispatchPatch(data, url, beginAction, successAction, errorAction, extraActions=null) {
+  dispatchPatch(
+    data,
+    url,
+    beginAction,
+    successAction,
+    errorAction,
+    extraActions=null,
+    ) {
     return this.dispatchWithData(
-      axios.patch, data, url, beginAction, successAction, errorAction, extraActions);
+      axios.patch,
+      data,
+      url,
+      beginAction,
+      successAction,
+      errorAction,
+      extraActions,
+    );
   }
 
-  dispatchPatchWithId(id, data, url, beginAction, successAction, errorAction, extraActions=null) {
+  dispatchPatchWithId(
+    id,
+    data,
+    url,
+    beginAction,
+    successAction,
+    errorAction,
+    extraActions=null,
+    ) {
     const urlWithId = `${url}${id}/`;
     return this.dispatchWithData(
-      axios.patch, data, urlWithId, beginAction, successAction, errorAction, extraActions);
+      axios.patch,
+      data,
+      urlWithId,
+      beginAction,
+      successAction,
+      errorAction,
+      extraActions,
+    );
   }
 
-  dispatchWithData(action, data, url, beginAction, successAction, errorAction, extraActions=null) {
+  dispatchWithData(
+    action,
+    data,
+    url,
+    beginAction,
+    successAction,
+    errorAction,
+    extraActions=null,
+    ) {
     return (dispatch, getState) => {
       dispatch(beginAction());
       const headers = this.getAuthorizationHeaders(getState);
@@ -42,36 +98,96 @@ class DispatchAPI {
     }
   }
 
-  dispatchGet(url, beginAction, successAction, errorAction, extraActions=null, params={}) {
+  dispatchGet(
+    url,
+    beginAction,
+    successAction,
+    errorAction,
+    extraActions=null,
+    params={},
+    ) {
     return this.dispatchWithoutData(
-      axios.get, url, beginAction, successAction, errorAction, extraActions, params);
+      axios.get,
+      url,
+      beginAction,
+      successAction,
+      errorAction,
+      extraActions,
+      params,
+    );
   }
 
-  dispatchGetWithId(id, url, beginAction, successAction, errorAction, extraActions=null, params={}) {
+  dispatchGetWithId(
+    id,
+    url,
+    beginAction,
+    successAction,
+    errorAction,
+    extraActions=null,
+    params={},
+    ) {
     const urlWithId = `${url}${id}/`;
     return this.dispatchWithoutData(
-      axios.get, urlWithId, beginAction, successAction, errorAction, extraActions, params);
+      axios.get,
+      urlWithId,
+      beginAction,
+      successAction,
+      errorAction,
+      extraActions,
+      params,
+    );
   }
 
-  dispatchDelete(id, url, beginAction, successAction, errorAction, extraActions=null) {
+  dispatchDelete(
+    id,
+    url,
+    beginAction,
+    successAction,
+    errorAction,
+    extraActions=null,
+    ) {
     const urlWithId = `${url}${id}/`;
+
+    console.log("xxxx 1 => ", urlWithId, extraActions);
+
     return this.dispatchWithoutData(
-      axios.delete, urlWithId, beginAction, successAction, errorAction, extraActions);
+      axios.delete,
+      urlWithId,
+      beginAction,
+      successAction,
+      errorAction,
+      extraActions,
+    );
   }
 
-  dispatchWithoutData(action ,url, beginAction, successAction, errorAction, extraActions=null, params={}) {
+  dispatchWithoutData(
+    action,
+    url,
+    beginAction,
+    successAction,
+    errorAction,
+    extraActions=null,
+    params={},
+    ) {
+
+    console.log("xxxx 2 => ", url, extraActions);
+
     return (dispatch, getState) => {
       dispatch(beginAction());
       const headersAndParams = {
         params,
-        ...this.getAuthorizationHeaders(getState),
+        ...this.getAuthorizationHeaders(getState)
       };
       return action(url, headersAndParams)
         .then(response => this.handleErrors(response, this.successfulStatusCodes))
         .then(response => {
           dispatch(successAction(response.data));
           this.dispatchExtraActions(dispatch, extraActions);
-          return response.data;
+          if (response.data) {
+            return response.data;
+          } else {
+            return response
+          }
         })
         .catch(error => dispatch(errorAction(error.response.data)));
     }

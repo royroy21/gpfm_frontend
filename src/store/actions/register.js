@@ -31,5 +31,5 @@ export const postRegister = (data) => new DispatchAPI().dispatchPost(
   postRegisterBegin,
   postRegisterSuccess,
   postRegisterError,
-  [() => postToken(data)]
+  [() => postToken(data)],
 );
