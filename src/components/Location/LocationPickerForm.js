@@ -38,6 +38,7 @@ const styles = theme => ({
     width: "100%",
   },
   searchButton: {
+    borderRadius: "50%",
     marginRight: theme.spacing(1),
   },
   locationSuccessIndicator: {
@@ -84,6 +85,7 @@ class LocationPickerForm extends Form {
   DEFAULT_LABEL = "Gig Location";
   MISSING_LOCATION_MESSAGE = "No location selected";
   LOCATION_PLACEHOLDER = "London";
+  LOCATION_BUTTON_HELP = "Type a location then click here";
 
   state = {
     formData: {
@@ -276,14 +278,16 @@ class LocationPickerForm extends Form {
           }) => (
             <div className={classes.container}>
               <div className={classes.inputsContainer}>
-                <Button
-                  className={classes.searchButton}
-                  variant={"contained"}
-                  type={"submit"}
-                  color={"secondary"}
-                >
-                  <LocationSearchingIcon />
-                </Button>
+                <Tooltip title={this.LOCATION_BUTTON_HELP}>
+                  <Button
+                    className={classes.searchButton}
+                    variant={"contained"}
+                    type={"submit"}
+                    color={"secondary"}
+                  >
+                    <LocationSearchingIcon />
+                  </Button>
+                </Tooltip>
                 <TextField
                   {...getInputProps()}
                   className={classes.searchField}
